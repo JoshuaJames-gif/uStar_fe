@@ -1,13 +1,15 @@
 import React, { useState } from "react";
 import { StyleSheet, Text, View, TextInput, Button } from "react-native";
+import Fire from "../fire"
 
-export default function Login() {
+export default class Login extends React.Component{
   // const [text, setText] = useState('')
   // const changeHandler = (val) => {
   //   setText(val)
   // }
+  state = {}
 
-  return (
+  render() (
     <View>
       <TextInput 
         style={styles.input}
