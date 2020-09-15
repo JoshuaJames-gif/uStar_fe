@@ -3,6 +3,8 @@ import React from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 import Header from './components/header'
 import Login from './components/login'
+import fire from './fire'
+import * as firebase from 'firebase'
 
 export default function App() {
   return (
