@@ -8,9 +8,12 @@ export default function App() {
     <View style={styles.container}>
       <Header />
       <View style={styles.content}>
-        {/* Please sign in */}
+        <text>Please Sign in</text>
         <View style={styles.list}>
           {/* {form} */}
+          <View styles={styles.button}>
+          {/* {signup button} */}
+          </View>
         </View>
       </View>
       <StatusBar style="auto" />
