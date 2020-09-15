@@ -2,6 +2,7 @@ import { StatusBar } from 'expo-status-bar';
 import React from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 import Header from './components/header'
+import Login from './components/login'
 
 export default function App() {
   return (
@@ -10,7 +11,7 @@ export default function App() {
       <View style={styles.content}>
         <text>Please Sign in</text>
         <View style={styles.list}>
-          {/* {form} */}
+          <Login />
           <View styles={styles.button}>
           {/* {signup button} */}
           </View>
