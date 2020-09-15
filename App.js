@@ -10,6 +10,7 @@ export default class App extends React.Component {
   state = {};
 
   render() {
+    return (
     <View style={styles.container}>
       <Header />
       <View style={styles.content}>
@@ -20,7 +21,9 @@ export default class App extends React.Component {
         </View>
       </View>
       <StatusBar style="auto" />
-    </View>;
+    </View>
+
+    )
   }
 }
 

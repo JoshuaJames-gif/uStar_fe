@@ -1,25 +1,51 @@
 import React, { useState } from "react";
-import { StyleSheet, Text, View, TextInput, Button } from "react-native";
-import Fire from "../fire"
+import { StyleSheet, Text, View, TextInput, Button, Alert } from "react-native";
+import Fire from "../fire";
+import * as firebase from "firebase";
 
-export default class Login extends React.Component{
-  // const [text, setText] = useState('')
-  // const changeHandler = (val) => {
-  //   setText(val)
-  // }
-  state = {}
-
-  render() (
-    <View>
-      <TextInput 
-        style={styles.input}
-        placeholder='Enter Email'
-        // onChangeText={changeHandler}
-      />
-      <TextInput style={styles.input} placeholder='Enter Password'/>
-      <Button onPress={() => {console.log('press')}} title='submit' color='coral'/>
-    </View>
-  )
+export default class Login extends React.Component {
+  state = {
+    email: "",
+    password: "",
+  };
+  onLoginPress = (event) => {
+    event.preventDefault();
+    Fire.auth()
+      .signInWithEmailAndPassword(this.state.email, this.state.password)
+      .then(
+        () => {},
+        (error) => {
+          Alert.alert(error.message);
+        }
+      );
+  };
+  // handleChange = (event) => {
+  //   const { name, value } = event.target;
+  //   this.setState({ [name]: value });
+  // };
+  render() {
+    return (
+      <View>
+        <TextInput
+          style={styles.input}
+          placeholder="Enter Email"
+          onChangeText={(text) => {
+            this.setState({ email: text });
+          }}
+          value={this.state.email}
+        />
+        <TextInput
+          style={styles.input}
+          placeholder="Enter Password"
+          onChangeText={(text) => {
+            this.setState({ password: text });
+          }}
+          value={this.state.password}
+        />
+        <Button onPress={this.onLoginPress} title="submit" color="coral" />
+      </View>
+    );
+  }
 }
 
 const styles = StyleSheet.create({
@@ -28,6 +54,6 @@ const styles = StyleSheet.create({
     paddingHorizontal: 8,
     paddingVertical: 6,
     borderBottomWidth: 1,
-    borderBottomColor: '#ddd'
-  }
-})
+    borderBottomColor: "#ddd",
+  },
+});
