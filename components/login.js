@@ -13,12 +13,15 @@ export default class Login extends React.Component {
     Fire.auth()
       .signInWithEmailAndPassword(this.state.email, this.state.password)
       .then(
-        () => {},
+        (user) => {
+          console.log(user);
+        },
         (error) => {
           Alert.alert(error.message);
         }
       );
   };
+
   // handleChange = (event) => {
   //   const { name, value } = event.target;
   //   this.setState({ [name]: value });
