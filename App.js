@@ -4,14 +4,18 @@ import SwitchNavigator from "./navigation/SwitchNavigator";
 
 class App extends React.Component {
   render() {
-    return <SwitchNavigator />;
+    return (
+      <View style={styles.container}>
+        <SwitchNavigator />
+      </View>
+    );
   }
 }
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#fff",
+    backgroundColor: "#264653",
     alignItems: "center",
     justifyContent: "center",
   },

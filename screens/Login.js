@@ -43,10 +43,19 @@ class Login extends React.Component {
         <TouchableOpacity style={styles.button} onPress={this.handleLogin}>
           <Text style={styles.buttonText}>Login</Text>
         </TouchableOpacity>
-        <Button
+        {/* <Button
+          style={styles.buttonSignup}
           title="Don't have an account yet? Sign up"
           onPress={() => this.props.navigation.navigate("Signup")}
-        />
+        /> */}
+        <TouchableOpacity
+          style={styles.buttonSignup}
+          onPress={() => this.props.navigation.navigate("Signup")}
+        >
+          <Text style={styles.buttonSignUpText}>
+            Don't have an account yet? Sign up
+          </Text>
+        </TouchableOpacity>
       </View>
     );
   }
@@ -54,10 +63,17 @@ class Login extends React.Component {
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
-    backgroundColor: "#fff",
+    flex: 0.5,
+    height: 500,
+    width: 500,
     alignItems: "center",
     justifyContent: "center",
+    backgroundColor: "#fff",
+    borderRadius: 5,
+    borderTopLeftRadius: 20,
+    borderTopRightRadius: 20,
+    borderBottomLeftRadius: 20,
+    borderBottomRightRadius: 20,
   },
   inputBox: {
     width: "85%",
@@ -73,8 +89,8 @@ const styles = StyleSheet.create({
     marginBottom: 20,
     paddingVertical: 5,
     alignItems: "center",
-    backgroundColor: "#F6820D",
-    borderColor: "#F6820D",
+    backgroundColor: "#E76F51",
+    borderColor: "#E76F51",
     borderWidth: 1,
     borderRadius: 5,
     width: 200,
@@ -84,8 +100,21 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
     color: "#fff",
   },
+  buttonSignUpText: {
+    fontSize: 15,
+    fontWeight: "bold",
+    color: "#fff",
+  },
   buttonSignup: {
     fontSize: 12,
+    borderRadius: 5,
+    height: 30,
+    width: 300,
+    backgroundColor: "#FFA611",
+    overflow: "hidden",
+    borderColor: "#FFA611",
+    alignItems: "center",
+    justifyContent: "center",
   },
 });
 

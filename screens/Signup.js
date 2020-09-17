@@ -5,6 +5,7 @@ import {
   StyleSheet,
   TouchableOpacity,
   Text,
+  Alert,
 } from "react-native";
 import Firebase from "../config/Firebase";
 
@@ -52,10 +53,10 @@ class Signup extends React.Component {
           <Text style={styles.buttonText}>Signup</Text>
         </TouchableOpacity>
         <TouchableOpacity
-          style={styles.button}
+          style={styles.buttonSignup}
           onPress={this.handleBackToLogin}
         >
-          <Text style={styles.buttonText}>Back to Login!</Text>
+          <Text style={styles.buttonSignUpText}>Back to Login!</Text>
         </TouchableOpacity>
       </View>
     );
@@ -64,10 +65,19 @@ class Signup extends React.Component {
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
     backgroundColor: "#fff",
     alignItems: "center",
     justifyContent: "center",
+
+    flex: 0.5,
+    height: 500,
+    width: 500,
+    overflow: "hidden",
+    borderRadius: 5,
+    borderTopLeftRadius: 20,
+    borderTopRightRadius: 20,
+    borderBottomLeftRadius: 20,
+    borderBottomRightRadius: 20,
   },
   inputBox: {
     width: "85%",
@@ -94,8 +104,22 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
     color: "#fff",
   },
+  buttonSignUpText: {
+    fontSize: 14,
+    fontWeight: "bold",
+    color: "#fff",
+  },
   buttonSignup: {
-    fontSize: 12,
+    marginTop: 5,
+    marginBottom: 20,
+    paddingVertical: 5,
+    alignItems: "center",
+    backgroundColor: "#E76F51",
+    borderColor: "#E76F51",
+    borderWidth: 1,
+    borderRadius: 5,
+    width: 150,
+    height: 30,
   },
 });
 
