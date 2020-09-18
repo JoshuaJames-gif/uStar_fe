@@ -7,6 +7,7 @@ import {
   Text,
   Button,
 } from "react-native";
+import AsyncStorage from "@react-native-community/async-storage";
 import Firebase from "../config/Firebase";
 
 class Login extends React.Component {
@@ -16,11 +17,19 @@ class Login extends React.Component {
   };
   handleLogin = () => {
     const { email, password } = this.state;
-
     Firebase.auth()
       .signInWithEmailAndPassword(email, password)
       .then(() => this.props.navigation.navigate("Profile"))
       .catch((error) => console.log(error));
+  };
+
+  storeData = async (value) => {
+    try {
+      const jsonValue = JSON.stringify(value);
+      await AsyncStorage.setItem("Login", jsonValue);
+    } catch (e) {
+      console.log(e);
+    }
   };
 
   render() {

@@ -6,9 +6,11 @@ import {
   Button,
   Image,
   TouchableOpacity,
+  SafeAreaView,
 } from "react-native";
 import Firebase from "../config/Firebase";
 import logo from "../assets/logo.png";
+import { Avatar, Caption, Title } from "react-native-paper";
 
 class Profile extends React.Component {
   handleSignout = () => {
@@ -18,73 +20,50 @@ class Profile extends React.Component {
 
   render() {
     return (
-      <View style={styles.profilecontainer}>
-        <View style={styles.profileviewer}>
-          <View style={styles.title}>
-            <Text>Profile Screen</Text>
-          </View>
-          {/* avatar */}
-          <View>
-            <Text style={styles.avatar}>Avatar</Text>
-          </View>
-          <View>
-            <Image source={logo} style={{ width: 305, height: 159 }} />
-          </View>
-          <View>
-            <Image
+      <SafeAreaView style={styles.container}>
+        <View style={styles.userInfo}>
+          <View style={{ flexDirection: "row", marginTop: 15 }}>
+            <Avatar.Image
               source={{ uri: "https://i.imgur.com/TkIrScD.png" }}
-              style={{
-                width: 305,
-                height: 159,
-                marginBottom: 5,
-                marginTop: 20,
-              }}
+              size={160}
             />
-          </View>
-          {/* <Image
-          style={styles.newImage}
-          source={require("smiling-gold-star.png")}
-        /> */}
-          {/* account details: email & name */}
-          {/* Register new child */}
-          {/* current ChildList */}
-          <View>
-            <Text>{this.props.email}</Text>
-          </View>
-          <View>
-            <TouchableOpacity
-              style={styles.signOutButton}
-              title="Logout"
-              onPress={this.handleSignout}
-            >
-              <Text>Sign Out! </Text>
-            </TouchableOpacity>
+            <View style={{ marginLeft: 20 }}>
+              <Title
+                style={[
+                  styles.title,
+                  {
+                    marginTop: 15,
+                    marginBottom: 5,
+                  },
+                ]}
+              >
+                John Doe
+              </Title>
+              <Caption style={styles.caption}>@J_doe</Caption>
+            </View>
           </View>
         </View>
-      </View>
+
+        {/* account details: email & name */}
+        {/* Register new child */}
+        {/* current ChildList */}
+        <View>
+          <TouchableOpacity
+            style={styles.signOutButton}
+            title="Logout"
+            onPress={this.handleSignout}
+          >
+            <Text>Sign Out now </Text>
+          </TouchableOpacity>
+        </View>
+      </SafeAreaView>
     );
   }
 }
 
 const styles = StyleSheet.create({
-  profilecontainer: {
+  container: {
     flex: 1,
-    marginTop: 5,
-    marginBottom: 5,
-    backgroundColor: "#fff",
-    alignItems: "center",
-    justifyContent: "center",
-    height: 500,
-    width: 1000,
-  },
-  title: {
-    flex: 0,
-    marginBotton: 100,
-    position: "relative",
-    alignItem: "flex-start",
-    marginBottom: 100,
-    backgroundColor: "#fff",
-    fontSize: 30,
   },
   signOutButton: {
     fontSize: 12,
