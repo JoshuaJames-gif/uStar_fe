@@ -53,7 +53,6 @@ const styles = StyleSheet.create({
   },
 
   buttonLogin: {
-    fontSize: 12,
     borderRadius: 5,
     height: 30,
     width: 300,

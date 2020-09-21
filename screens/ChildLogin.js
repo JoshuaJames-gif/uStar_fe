@@ -7,7 +7,6 @@ import {
   Text,
   Alert,
 } from "react-native";
-import { Directions } from "react-native-gesture-handler";
 import Firebase from "../config/Firebase";
 class ChildLogin extends Component {
   render() {
@@ -21,7 +20,6 @@ class ChildLogin extends Component {
               height: 50,
               width: 50,
               borderColor: "orange",
-              fontSize: 25,
             }}
           />
           <TextInput
@@ -30,7 +28,6 @@ class ChildLogin extends Component {
               height: 50,
               width: 50,
               borderColor: "orange",
-              fontSize: 25,
             }}
           />
           <TextInput
@@ -39,7 +36,6 @@ class ChildLogin extends Component {
               height: 50,
               width: 50,
               borderColor: "orange",
-              fontSize: 25,
             }}
           />
           <TextInput
@@ -48,8 +44,6 @@ class ChildLogin extends Component {
               height: 50,
               width: 50,
               borderColor: "orange",
-              fontSize: 25,
-              maxLength: 1,
             }}
           />
         </View>
