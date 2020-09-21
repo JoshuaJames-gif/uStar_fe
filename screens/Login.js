@@ -5,7 +5,6 @@ import {
   StyleSheet,
   TouchableOpacity,
   Text,
-  Button,
 } from "react-native";
 import AsyncStorage from "@react-native-community/async-storage";
 import Firebase from "../config/Firebase";
@@ -23,14 +22,14 @@ class Login extends React.Component {
       .catch((error) => console.log(error));
   };
 
-  storeData = async (value) => {
-    try {
-      const jsonValue = JSON.stringify(value);
-      await AsyncStorage.setItem("Login", jsonValue);
-    } catch (e) {
-      console.log(e);
-    }
-  };
+  // storeData = async (value) => {
+  //   try {
+  //     const jsonValue = JSON.stringify(value);
+  //     await AsyncStorage.setItem("Login", jsonValue);
+  //   } catch (e) {
+  //     console.log(e);
+  //   }
+  // };
 
   render() {
     return (
@@ -52,11 +51,7 @@ class Login extends React.Component {
         <TouchableOpacity style={styles.button} onPress={this.handleLogin}>
           <Text style={styles.buttonText}>Login</Text>
         </TouchableOpacity>
-        {/* <Button
-          style={styles.buttonSignup}
-          title="Don't have an account yet? Sign up"
-          onPress={() => this.props.navigation.navigate("Signup")}
-        /> */}
+
         <TouchableOpacity
           style={styles.buttonSignup}
           onPress={() => this.props.navigation.navigate("Signup")}
