@@ -10,6 +10,10 @@ import {
   TextInput,
   ScrollView,
   TouchableHighlight,
+  Alert,
+  FlatList,
+  List,
+  ListItem,
 } from "react-native";
 import Firebase from "../config/Firebase";
 import logo from "../assets/logo.png";
@@ -17,6 +21,7 @@ import { Avatar, Caption, Title } from "react-native-paper";
 import Icon from "react-native-vector-icons/MaterialCommunityIcons";
 import BottomSheet from "reanimated-bottom-sheet";
 import Animated from "react-native-reanimated";
+import * as api from "../utils/api";
 
 // class Profile extends React.Component {
 //   handleSignout = () => {
@@ -141,26 +146,43 @@ import Animated from "react-native-reanimated";
 // export default Profile;
 
 class Profile extends React.Component {
-  bs = React.createRef();
-  fall = new Animated.Value(1);
-  renderInner = () => {};
-  renderHeader = () => {
-    <View style={styles.header}>
-      <View></View>
-    </View>;
+  state = {
+    children: [],
+    child_name: "",
+    parent_name: this.props.navigation.state.params.name,
+    parent_email: this.props.navigation.state.params.email,
   };
+
+  componentDidMount() {
+    this.getChildByParent().then((children) => {
+      this.setState({ children });
+    });
+  }
+
+  handleSubmit = (event) => {
+    event.preventDefault();
+    const { child_name, parent_email } = this.state;
+    api.postChildren(parent_email, 0, child_name).then((child_name) => {
+      this.setState({ children: child_name });
+    });
+  };
+
+  getChildByParent = () => {
+    return api.getChildrenByParent(this.props.parent_email);
+  };
+
+  addChild = (newChild) => {
+    this.setState((currentState) => {
+      return {
+        children: [newChild, ...currentState.children],
+      };
+    });
+  };
+
   render() {
+    const { children } = this.state;
     return (
       <View>
-        <BottomSheet
-          ref={this.bs}
-          snapPoints={[330, 0]}
-          renderContent={this.renderInner}
-          renderHeader={this.renderHeader}
-          initialSnap={0}
-          callbackNode={this.fall}
-          enabledGestureInteraction={true}
-        />
         <ScrollView showsVerticalScrollIndicator={false}>
           <View
             style={{
@@ -179,7 +201,7 @@ class Profile extends React.Component {
           </View>
           <View style={{ alignItems: "center" }}>
             <Image
-              source={require("/Users/jamesgill/Desktop/northcoders/project/uStar_fe/ustar_fe/images/smiling-gold-star.png")}
+              source={require("../images/smiling-gold-star.png")}
               stylep={{
                 width: 140,
                 height: 140,
@@ -188,10 +210,10 @@ class Profile extends React.Component {
               }}
             ></Image>
             <Text style={{ fontSize: 25, fontWeight: "bold", padding: 10 }}>
-              Joe Doe
+              {this.props.navigation.state.params.name}
             </Text>
             <Text style={{ fontSize: 15, fontWeight: "bold", color: "grey" }}>
-              Email Address
+              {this.props.navigation.state.params.email}
             </Text>
           </View>
           <View
@@ -224,8 +246,19 @@ class Profile extends React.Component {
                 marginLeft: 10,
               }}
             >
-              Register Child
+              Register Child:
             </Text>
+            <TextInput
+              style={styles.input}
+              value={this.state.child_name}
+              onChangeText={(child_name) => this.setState({ child_name })}
+            />
+            <TouchableOpacity
+              style={styles.addChild}
+              onPress={this.handleSubmit}
+            >
+              <Text>Add Child</Text>
+            </TouchableOpacity>
           </View>
           <View
             style={{
@@ -233,7 +266,8 @@ class Profile extends React.Component {
               flexDirection: "row",
               justifyContent: "center",
               backgroundColor: "#fff",
-              width: "90%",
+              width: "100%",
+              height: 150,
               padding: 20,
               paddingBottom: 22,
               borderRadius: 10,
@@ -250,16 +284,23 @@ class Profile extends React.Component {
               }}
               style={{ width: 20, height: 20 }}
             ></Image>
-            <Text
+            {/* <Text
               style={{
                 fontSize: 15,
                 color: "#818181",
                 fontWeight: "bold",
                 marginLeft: 10,
               }}
-            >
-              Child List
-            </Text>
+            > */}
+            <View>
+              {children.map((child) => (
+                <View key={child.child_id}>
+                  <Text>{child.child_name}</Text>
+                  <Text>{child.star_count}</Text>
+                </View>
+              ))}
+            </View>
+            {/* </Text> */}
           </View>
           <TouchableOpacity
             style={{
@@ -304,6 +345,21 @@ const styles = StyleSheet.create({
     paddingTop: 20,
     borderTopLeftRadius: 20,
     borderTopRightRadius: 20,
+  },
+  input: {
+    borderWidth: 1,
+    borderColor: "#777",
+    padding: 8,
+    margin: 10,
+    width: 200,
+  },
+  addChild: {
+    borderWidth: 1,
+    borderColor: "#777",
+    backgroundColor: "orange",
+    padding: 8,
+    margin: 10,
+    width: 100,
   },
 });
 export default Profile;

@@ -8,17 +8,32 @@ import {
 } from "react-native";
 import AsyncStorage from "@react-native-community/async-storage";
 import Firebase from "../config/Firebase";
+import * as api from "../utils/api";
 
 class Login extends React.Component {
   state = {
-    email: "",
+    parent_name: "",
+    parent_email: "",
     password: "",
   };
   handleLogin = () => {
-    const { email, password } = this.state;
+    const { parent_name, parent_email, password } = this.state;
+
+    api.getParent(parent_email, parent_name).then((parent) => {
+      this.setState({
+        parent_name: parent.parent_name,
+        parent_email: parent.parent_email,
+      });
+    });
+
     Firebase.auth()
-      .signInWithEmailAndPassword(email, password)
-      .then(() => this.props.navigation.navigate("Profile"))
+      .signInWithEmailAndPassword(parent_email, password)
+      .then(() =>
+        this.props.navigation.navigate("Profile", {
+          email: this.state.parent_email,
+          name: this.state.parent_name,
+        })
+      )
       .catch((error) => console.log(error));
   };
 
@@ -36,8 +51,8 @@ class Login extends React.Component {
       <View style={styles.container}>
         <TextInput
           style={styles.inputBox}
-          value={this.props.email}
-          onChangeText={(email) => this.setState({ email })}
+          value={this.props.parent_email}
+          onChangeText={(parent_email) => this.setState({ parent_email })}
           placeholder="Email"
           autoCapitalize="none"
         />

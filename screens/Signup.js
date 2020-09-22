@@ -8,21 +8,30 @@ import {
   Alert,
 } from "react-native";
 import Firebase from "../config/Firebase";
+import * as api from "../utils/api";
 
 class Signup extends React.Component {
   state = {
-    name: "",
-    email: "",
+    parent_name: "",
+    parent_email: "",
     password: "",
   };
-  handleSignUp = () => {
-    const { email, password } = this.state;
+  handleSignUp = (event) => {
+    const { parent_name, parent_email, password } = this.state;
+    event.preventDefault();
+    api.postParent(parent_email, parent_name);
     Firebase.auth()
-      .createUserWithEmailAndPassword(email, password)
-      .then(() => this.props.navigation.navigate("Profile"))
+      .createUserWithEmailAndPassword(parent_email, password)
+      .then(() =>
+        this.props.navigation.navigate("Profile", {
+          email: this.state.parent_email,
+          name: this.state.parent_name,
+        })
+      )
       .catch((error) => console.log(error));
   };
   handleBackToLogin = () => {
+    Firebase.auth().signOut();
     this.props.navigation.navigate("Login");
   };
 
@@ -31,14 +40,14 @@ class Signup extends React.Component {
       <View style={styles.container}>
         <TextInput
           style={styles.inputBox}
-          value={this.state.name}
-          onChangeText={(name) => this.setState({ name })}
+          value={this.state.parent_name}
+          onChangeText={(parent_name) => this.setState({ parent_name })}
           placeholder="Full Name"
         />
         <TextInput
           style={styles.inputBox}
-          value={this.state.email}
-          onChangeText={(email) => this.setState({ email })}
+          value={this.state.parent_email}
+          onChangeText={(parent_email) => this.setState({ parent_email })}
           placeholder="Email"
           autoCapitalize="none"
         />
