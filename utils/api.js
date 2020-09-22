@@ -9,6 +9,7 @@ export const fetchTasksByChild = (child_id) => {
 };
 
 export const updateTaskByChild = (task_id) => {
+  console.log(task_id);
   return axios
     .patch(`https://ustar-backend.herokuapp.com/api/tasks/${task_id}`, {
       task_status: "pending",

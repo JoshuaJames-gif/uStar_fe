@@ -13,7 +13,7 @@ import * as api from "../utils/api";
 class ChildPage extends Component {
   state = {
     isParentLoggedIn: false,
-    child: { child_id: 5, child_name: "James", star_count: 12 },
+    child: { child_id: 2, child_name: "James", star_count: 37 },
     tasks: [],
   };
 
@@ -22,8 +22,7 @@ class ChildPage extends Component {
       this.setState({ tasks });
     });
   };
-  handleReviewPushByChild = (event) => {
-    const task_id = event.target.id;
+  handleReviewPushByChild = (task_id) => {
     api.updateTaskByChild(task_id).then(() => {
       this.getTasks(this.state.child.child_id);
     });
@@ -50,10 +49,18 @@ class ChildPage extends Component {
                 <Text>Is worth {task.stars_worth} ⭐</Text>
                 <Text>Status: {task.task_status}</Text>
                 <TouchableOpacity
-                  onPress={this.handleReviewPushByChild}
+                  id={task.task_id}
+                  key={task.task_id}
+                  onPress={() => {
+                    this.handleReviewPushByChild(task.task_id);
+                  }}
                   style={styles.button}
                 >
-                  <Text id={task.task_id} style={styles.buttonText}>
+                  <Text
+                    id={task.task_id}
+                    key={task.task_id}
+                    style={styles.buttonText}
+                  >
                     Request Review{" "}
                   </Text>
                 </TouchableOpacity>
