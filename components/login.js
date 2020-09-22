@@ -45,11 +45,7 @@ export default class Login extends React.Component {
           }}
           value={this.state.password}
         />
-        <Button
-          onPress={this.onLoginPress}
-          title="submit"
-          style={styles.login}
-        />
+        <Button onPress={this.onLoginPress} title="submit" style={styles.login} />
       </View>
     );
   }
@@ -64,6 +60,6 @@ const styles = StyleSheet.create({
     borderBottomColor: "#ddd",
   },
   login: {
-    backgroundColor: "white",
-  },
+    backgroundColor:
+  }
 });
