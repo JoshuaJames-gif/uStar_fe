@@ -4,6 +4,7 @@ import Login from "../screens/Login";
 import Signup from "../screens/Signup";
 import Profile from "../screens/Profile";
 import ChildPage from "../screens/ChildPage";
+import RewardsPage from "../screens/RewardsPage";
 
 const SwitchNavigator = createSwitchNavigator(
   {
@@ -19,9 +20,12 @@ const SwitchNavigator = createSwitchNavigator(
     Profile: {
       screen: Profile,
     },
+    RewardsPage: {
+      screen: RewardsPage,
+    },
   },
   {
-    initialRouteName: "ChildPage",
+    initialRouteName: "RewardsPage",
   }
 );
 
