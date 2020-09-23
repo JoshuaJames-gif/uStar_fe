@@ -7,6 +7,7 @@ import {
   Text,
   Alert,
 } from "react-native";
+import AsyncStorage from "@react-native-community/async-storage";
 import Firebase from "../config/Firebase";
 import * as api from "../utils/api";
 
@@ -16,10 +17,26 @@ class Signup extends React.Component {
     parent_email: "",
     password: "",
   };
+
+  storeData = async (value) => {
+    try {
+      const jsonValue = JSON.stringify(value);
+      await AsyncStorage.setItem(
+        "userProfile",
+        JSON.stringify({
+          parent_name: this.state.parent_name,
+          parent_email: this.state.parent_email,
+        })
+      );
+    } catch (e) {
+      console.log(e);
+    }
+  };
   handleSignUp = (event) => {
     const { parent_name, parent_email, password } = this.state;
     event.preventDefault();
     api.postParent(parent_email, parent_name);
+    this.storeData();
     Firebase.auth()
       .createUserWithEmailAndPassword(parent_email, password)
       .then(() =>
@@ -31,8 +48,10 @@ class Signup extends React.Component {
       .catch((error) => console.log(error));
   };
   handleBackToLogin = () => {
-    Firebase.auth().signOut();
-    this.props.navigation.navigate("Login");
+    this.props.navigation.navigate("Login", {
+      email: this.state.parent_email,
+      name: this.state.parent_name,
+    });
   };
 
   render() {

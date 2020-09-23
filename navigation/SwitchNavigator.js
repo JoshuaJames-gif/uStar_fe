@@ -14,18 +14,19 @@ const SwitchNavigator = createSwitchNavigator(
     Home: {
       screen: Home,
     },
-    Login: {
-      screen: Login,
-    },
     Signup: {
       screen: Signup,
     },
+    Login: {
+      screen: Login,
+    },
+
     Profile: {
       screen: Profile,
     },
   },
   {
-    initialRouteName: "Login",
+    initialRouteName: "Home",
   }
 );
 

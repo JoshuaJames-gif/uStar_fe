@@ -19,13 +19,6 @@ class Login extends React.Component {
   handleLogin = () => {
     const { parent_name, parent_email, password } = this.state;
 
-    api.getParent(parent_email, parent_name).then((parent) => {
-      this.setState({
-        parent_name: parent.parent_name,
-        parent_email: parent.parent_email,
-      });
-    });
-
     Firebase.auth()
       .signInWithEmailAndPassword(parent_email, password)
       .then(() =>
@@ -35,6 +28,12 @@ class Login extends React.Component {
         })
       )
       .catch((error) => console.log(error));
+    // api.getParent(parent_email, parent_name).then((parent) => {
+    //   this.setState({
+    //     parent_name: parent.parent_name,
+    //     parent_email: parent.parent_email,
+    //   });
+    // });
   };
 
   // storeData = async (value) => {
