@@ -1,5 +1,6 @@
 import React, { Component } from "react";
-// import { render } from "react-dom";
+import * as api from "../utils/api";
+
 import {
   View,
   TextInput,
@@ -9,71 +10,61 @@ import {
   Button,
   ScrollView,
 } from "react-native";
-import TaskList from "../components/TaskList";
-import * as api from "../utils/api";
-import PostTask from "../components/PostTask";
-
+import TasksPage from "./TasksPage";
+import RewardsPage from "./RewardsPage";
 class ChildPage extends Component {
   state = {
-    isParentLoggedIn: true,
-    child: { child_id: 7, child_name: "James", star_count: 37 },
-    tasks: [],
+    isParentLoggedIn: false,
+    child: {},
+    showRewards: false,
   };
-
-  getTasks = (child_id) => {
-    api.fetchTasksByChild(child_id).then((tasks) => {
-      this.setState({ tasks });
-    });
-  };
-  handleReviewPushByChild = (task_id, task_status) => {
-    api.updateTaskByChild(task_id, task_status).then(() => {
-      this.getTasks(this.state.child.child_id);
-    });
-  };
-  handleDeleteTask = (task_id) => {
-    api.removeTask(task_id).then(() => {
-      this.setState((currentState) => {
-        return {
-          tasks: currentState.tasks.filter((task) => task.task_id !== task_id),
-        };
-      });
+  getChildByChildId = (child_id) => {
+    api.fetchChildByChildId(child_id).then((child) => {
+      this.setState({ child });
     });
   };
   componentDidMount = () => {
-    this.getTasks(this.state.child.child_id);
-  };
-  componentDidUpdate = (prevProps, prevState) => {
-    if (prevState.tasks.length !== this.state.tasks.length) {
-      this.getTasks(this.state.child.child_id);
-    }
+    this.getChildByChildId(7);
   };
   render() {
-    const { child_name, star_count, child_id } = this.state.child;
-    const { isParentLoggedIn, tasks } = this.state;
+    const {
+      showRewards,
+      isParentLoggedIn,
+      child: { child_name, star_count, child_id },
+    } = this.state;
 
     return (
       <View style={styles.container}>
         <Text>
           Hi {child_name}, you currently have {star_count} stars.
         </Text>
-        <ScrollView>
-          <TaskList
-            tasks={tasks}
-            isParentLoggedIn={isParentLoggedIn}
-            handleReviewPushByChild={this.handleReviewPushByChild}
-            handleDeleteTask={this.handleDeleteTask}
-          />
-          <PostTask
-            isParentLoggedIn={isParentLoggedIn}
+        <TouchableOpacity
+          style={styles.button}
+          onPress={() => {
+            this.setState({ showRewards: !showRewards });
+          }}
+        >
+          <Text style={styles.buttonText}>
+            {showRewards ? "Show Tasks" : "Show Rewards"}
+          </Text>
+        </TouchableOpacity>
+        {this.state.showRewards ? (
+          <RewardsPage
             child_id={child_id}
-            getTasks={this.getTasks}
+            isParentLoggedIn={isParentLoggedIn}
+            getChildByChildId={this.getChildByChildId}
           />
-        </ScrollView>
+        ) : (
+          <TasksPage
+            child_id={child_id}
+            isParentLoggedIn={isParentLoggedIn}
+            getChildByChildId={this.getChildByChildId}
+          />
+        )}
       </View>
     );
   }
 }
-
 const styles = StyleSheet.create({
   container: {
     backgroundColor: "#ffff",
