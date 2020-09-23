@@ -7,6 +7,7 @@ import {
   TouchableOpacity,
 } from "react-native";
 import * as api from "../utils/api";
+
 const RewardsList = (props) => {
   const handleBuy = (child_id, star_cost) => {
     api.patchChild(child_id, -star_cost).then(() => {
@@ -24,13 +25,23 @@ const RewardsList = (props) => {
             <View key={reward_id} style={styles.listItem}>
               <Text>The reward is {reward_description}</Text>
               <Text>Costs {star_cost} ⭐</Text>
+              {!isParentLoggedIn && (
+                <TouchableOpacity
+                  style={styles.button}
+                  onPress={() => {
+                    handleBuy(child_id, star_cost);
+                  }}
+                >
+                  <Text style={styles.buttonText}> Buy </Text>
+                </TouchableOpacity>
+              )}
               <TouchableOpacity
                 style={styles.button}
                 onPress={() => {
-                  handleBuy(child_id, star_cost);
+                  handleDeleteReward(reward_id);
                 }}
               >
-                <Text style={styles.buttonText}> Buy </Text>
+                <Text style={styles.buttonText}> Remove </Text>
               </TouchableOpacity>
             </View>
           );
