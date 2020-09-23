@@ -9,8 +9,9 @@ import {
   Button,
   ScrollView,
 } from "react-native";
-import { FlatList } from "react-native-gesture-handler";
+import TaskList from "../components/TaskList";
 import * as api from "../utils/api";
+import PostTask from "../components/PostTask";
 
 class ChildPage extends Component {
   state = {
@@ -27,13 +28,7 @@ class ChildPage extends Component {
   };
   handleReviewPushByChild = (task_id, task_status) => {
     api.updateTaskByChild(task_id, task_status).then(() => {
-      this.getTasks(child.child_id);
-    });
-  };
-  handlePost = (child_id, task_description, stars_worth) => {
-    api.createTask(child_id, task_description, stars_worth).then(() => {
       this.getTasks(this.state.child.child_id);
-      this.setState({ newTask: { task_description: "", stars_worth: "" } });
     });
   };
   handleDeleteTask = (task_id) => {
@@ -63,114 +58,17 @@ class ChildPage extends Component {
           Hi {child_name}, you currently have {star_count} stars.
         </Text>
         <ScrollView>
-          <View style={styles.list}>
-            {tasks.map((task) => {
-              const {
-                task_status,
-                task_description,
-                stars_worth,
-                task_id,
-              } = task;
-
-              return (
-                <View key={task_id} style={styles.listItem}>
-                  <Text>The task is to {task_description}</Text>
-                  <Text>Is worth {stars_worth} ⭐</Text>
-                  <Text>Status: {task_status}</Text>
-                  {isParentLoggedIn ? (
-                    <View>
-                      <TouchableOpacity
-                        onPress={() =>
-                          this.handleReviewPushByChild(task_id, "completed")
-                        }
-                        style={
-                          task_status === "completed"
-                            ? styles.disabledButton
-                            : styles.button
-                        }
-                        disabled={task_status === "completed"}
-                      >
-                        <Text id={task_id} style={styles.buttonText}>
-                          Confirm request
-                        </Text>
-                      </TouchableOpacity>
-                      <TouchableOpacity
-                        onPress={() => this.handleDeleteTask(task_id)}
-                        style={styles.button}
-                      >
-                        <Text style={styles.buttonText}>Delete </Text>
-                      </TouchableOpacity>
-                    </View>
-                  ) : (
-                    <TouchableOpacity
-                      style={
-                        task_status === "pending"
-                          ? styles.disabledButton
-                          : styles.button
-                      }
-                      disabled={task_status === "pending"}
-                      onPress={() => {
-                        this.handleReviewPushByChild(task_id, "pending");
-                      }}
-                    >
-                      <Text
-                        id={task.task_id}
-                        key={task.task_id}
-                        style={styles.buttonText}
-                      >
-                        Request Review
-                      </Text>
-                    </TouchableOpacity>
-                  )}
-                </View>
-              );
-            })}
-          </View>
-          {isParentLoggedIn && (
-            <View style={styles.container}>
-              <TextInput
-                style={styles.inputBox}
-                value={newTask.task_description}
-                onChangeText={(task_description) =>
-                  this.setState((currentState) => {
-                    return {
-                      newTask: { ...newTask, task_description },
-                    };
-                  })
-                }
-                placeholder="New task description"
-              />
-              <TextInput
-                style={styles.inputBox}
-                value={newTask.stars_worth}
-                onChangeText={(stars_worth) =>
-                  this.setState((currentState) => {
-                    return {
-                      newTask: { ...newTask, stars_worth },
-                    };
-                  })
-                }
-                placeholder="Stars worth"
-              />
-              <TouchableOpacity
-                style={
-                  newTask.task_description === ""
-                    ? styles.disabledButton
-                    : styles.button
-                }
-                disabled={newTask.task_description === ""}
-                onPress={() => {
-                  this.handlePost(
-                    child_id,
-                    newTask.task_description,
-                    newTask.stars_worth
-                  );
-                }}
-              >
-                <Text style={styles.buttonText}>Add new task</Text>
-              </TouchableOpacity>
-            </View>
-          )}
+          <TaskList
+            tasks={tasks}
+            isParentLoggedIn={isParentLoggedIn}
+            handleReviewPushByChild={this.handleReviewPushByChild}
+            handleDeleteTask={this.handleDeleteTask}
+          />
+          <PostTask
+            isParentLoggedIn={isParentLoggedIn}
+            child_id={child_id}
+            getTasks={this.getTasks}
+          />
         </ScrollView>
       </View>
     );
