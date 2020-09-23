@@ -1,11 +1,9 @@
 import React from "react";
 import {
   View,
-  TextInput,
   StyleSheet,
   TouchableOpacity,
   Text,
-  Button,
   ScrollView,
 } from "react-native";
 
@@ -63,13 +61,7 @@ const TaskList = (props) => {
                     handleReviewPushByChild(task_id, "pending");
                   }}
                 >
-                  <Text
-                    id={task.task_id}
-                    key={task.task_id}
-                    style={styles.buttonText}
-                  >
-                    Request Review
-                  </Text>
+                  <Text style={styles.buttonText}>Request Review</Text>
                 </TouchableOpacity>
               )}
             </View>
