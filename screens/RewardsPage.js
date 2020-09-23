@@ -1,5 +1,7 @@
 import React, { Component } from "react";
-// import { render } from "react-dom";
+import RewardsList from "../components/RewardsList";
+import * as api from "../utils/api";
+import PostReward from "../components/PostReward";
 import {
   View,
   TextInput,
@@ -9,71 +11,70 @@ import {
   Button,
   ScrollView,
 } from "react-native";
-import TaskList from "../components/TaskList";
-import * as api from "../utils/api";
-import PostTask from "../components/PostTask";
-
-class ChildPage extends Component {
+class RewardsPage extends Component {
   state = {
     isParentLoggedIn: true,
-    child: { child_id: 7, child_name: "James", star_count: 37 },
-    tasks: [],
+    child: {},
+    rewards: [],
   };
 
-  getTasks = (child_id) => {
-    api.fetchTasksByChild(child_id).then((tasks) => {
-      this.setState({ tasks });
+  getRewards = (child_id) => {
+    api.fetchRewardsByChild(child_id).then((rewards) => {
+      this.setState({ rewards });
     });
   };
-  handleReviewPushByChild = (task_id, task_status) => {
-    api.updateTaskByChild(task_id, task_status).then(() => {
-      this.getTasks(this.state.child.child_id);
-    });
-  };
-  handleDeleteTask = (task_id) => {
-    api.removeTask(task_id).then(() => {
+  handleDeleteReward = (reward_id) => {
+    api.removeReward(reward_id).then(() => {
       this.setState((currentState) => {
         return {
-          tasks: currentState.tasks.filter((task) => task.task_id !== task_id),
+          rewards: currentState.rewards.filter(
+            (reward) => reward.reward_id !== reward_id
+          ),
         };
       });
     });
   };
+  getChildByChildId = (child_id) => {
+    api.fetchChildByChildId(child_id).then((child) => {
+      this.setState({ child });
+    });
+  };
   componentDidMount = () => {
-    this.getTasks(this.state.child.child_id);
+    this.getChildByChildId(7);
   };
   componentDidUpdate = (prevProps, prevState) => {
-    if (prevState.tasks.length !== this.state.tasks.length) {
-      this.getTasks(this.state.child.child_id);
+    if (
+      prevState.rewards.length !== this.state.rewards.length ||
+      prevState.child.child_id !== this.state.child.child_id
+    ) {
+      this.getRewards(this.state.child.child_id);
     }
   };
   render() {
     const { child_name, star_count, child_id } = this.state.child;
-    const { isParentLoggedIn, tasks } = this.state;
-
+    const { isParentLoggedIn, rewards } = this.state;
     return (
       <View style={styles.container}>
         <Text>
           Hi {child_name}, you currently have {star_count} stars.
         </Text>
         <ScrollView>
-          <TaskList
-            tasks={tasks}
+          <RewardsList
+            rewards={rewards}
             isParentLoggedIn={isParentLoggedIn}
-            handleReviewPushByChild={this.handleReviewPushByChild}
-            handleDeleteTask={this.handleDeleteTask}
+            handleDeleteReward={this.handleDeleteReward}
+            getChildByChildId={this.getChildByChildId}
           />
-          <PostTask
+          <PostReward
             isParentLoggedIn={isParentLoggedIn}
             child_id={child_id}
-            getTasks={this.getTasks}
+            getRewards={this.getRewards}
           />
         </ScrollView>
       </View>
     );
   }
 }
-
 const styles = StyleSheet.create({
   container: {
     backgroundColor: "#ffff",
@@ -137,4 +138,4 @@ const styles = StyleSheet.create({
     textAlign: "center",
   },
 });
-export default ChildPage;
+export default RewardsPage;
