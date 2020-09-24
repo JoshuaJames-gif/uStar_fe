@@ -28,22 +28,7 @@ class Login extends React.Component {
         })
       )
       .catch((error) => console.log(error));
-    // api.getParent(parent_email, parent_name).then((parent) => {
-    //   this.setState({
-    //     parent_name: parent.parent_name,
-    //     parent_email: parent.parent_email,
-    //   });
-    // });
   };
-
-  // storeData = async (value) => {
-  //   try {
-  //     const jsonValue = JSON.stringify(value);
-  //     await AsyncStorage.setItem("Login", jsonValue);
-  //   } catch (e) {
-  //     console.log(e);
-  //   }
-  // };
 
   render() {
     return (

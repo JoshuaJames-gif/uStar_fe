@@ -3,24 +3,14 @@ import {
   View,
   Text,
   StyleSheet,
-  Button,
   Image,
   TouchableOpacity,
-  SafeAreaView,
   TextInput,
   ScrollView,
-  TouchableHighlight,
-  Alert,
-  FlatList,
-  List,
-  ListItem,
 } from "react-native";
 import Firebase from "../config/Firebase";
-import logo from "../assets/logo.png";
-import { Avatar, Caption, Title } from "react-native-paper";
-import Icon from "react-native-vector-icons/MaterialCommunityIcons";
-import BottomSheet from "reanimated-bottom-sheet";
-import Animated from "react-native-reanimated";
+
+import ImagesPicker from "../components/ImagePicker";
 
 import * as api from "../utils/api";
 
@@ -28,8 +18,9 @@ class Profile extends React.Component {
   state = {
     children: [],
     child_name: "",
-    parent_name: this.props.navigation.state.params.name,
+    parent_name: "",
     parent_email: this.props.navigation.state.params.email,
+    parent: "",
   };
 
   componentDidMount() {
@@ -38,13 +29,11 @@ class Profile extends React.Component {
       .then((children) => {
         this.setState({ children });
       });
+    api.getParent(this.props.navigation.state.params.email).then((parent) => {
+      this.setState({ parent_name: parent.parent_name });
+    });
   }
-  // componentDidUpdate(prevProps, prevState) {
-  //   this.addChild(newChild)
-  //   if (prevState.children !== this.state.children) {
-  //     this.setState({ children, ...prevState.children });
-  //   }
-  // }
+
   handleDelete = (child_id) => {
     api.deleteChild(child_id).then(() => {
       this.setState((currentState) => {
@@ -56,15 +45,6 @@ class Profile extends React.Component {
       });
     });
   };
-  handleSubmit = (event) => {
-    event.preventDefault();
-    const { child_name, parent_email } = this.state;
-    // this.addChild(child_name);
-    console.log(child_name);
-    api
-      .postChildren(this.props.navigation.state.params.email, 0, child_name)
-      .then((child_name) => {});
-  };
   componentDidUpdate(prevProps, prevState) {
     if (prevState.children.length !== this.state.children.length) {
       api
@@ -74,6 +54,25 @@ class Profile extends React.Component {
         });
     }
   }
+  handleSubmit = (event) => {
+    const { child_name, parent_email } = this.state;
+
+    console.log(child_name);
+    api
+      .postChildren(this.props.navigation.state.params.email, 0, child_name)
+      .then((child) => {
+        this.setState((currentState) => {
+          return (currentState.children = [...currentState.children, child]);
+        });
+      });
+  };
+  handleSignOut = () => {
+    Firebase.auth()
+      .signOut()
+      .then(() => {
+        this.props.navigation.navigate("Login");
+      });
+  };
 
   render() {
     const { children } = this.state;
@@ -105,8 +104,9 @@ class Profile extends React.Component {
                 marginTop: -70,
               }}
             ></Image>
+            <ImagesPicker />
             <Text style={{ fontSize: 25, fontWeight: "bold", padding: 10 }}>
-              {this.props.navigation.state.params.name}
+              {this.state.parent_name}
             </Text>
             <Text style={{ fontSize: 15, fontWeight: "bold", color: "grey" }}>
               {this.props.navigation.state.params.email}
@@ -180,14 +180,7 @@ class Profile extends React.Component {
               }}
               style={{ width: 20, height: 20 }}
             ></Image>
-            {/* <Text
-              style={{
-                fontSize: 15,
-                color: "#818181",
-                fontWeight: "bold",
-                marginLeft: 10,
-              }}
-            > */}
+
             <View>
               {children.map((child) => (
                 <View key={child.child_id}>
@@ -204,6 +197,7 @@ class Profile extends React.Component {
             {/* </Text> */}
           </View>
           <TouchableOpacity
+            onPress={this.handleSignOut}
             style={{
               alignSelf: "center",
               flexDirection: "row",

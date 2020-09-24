@@ -7,17 +7,15 @@ const axiosInstance = axios.create({
 export const getParent = (parent_email, parent_name) => {
   return axiosInstance
     .get(`parents/${parent_email}`, { parent_email, parent_name })
-    .then(({ data }) => {
-      return data;
+    .then(({ data: { parent } }) => {
+      return parent;
     });
 };
 
 export const getChildByLogin = (login_code) => {
-  const newCode = Number(login_code);
-  console.log(" in api", typeof newCode);
   return axiosInstance
-    .get("children/", { params: { login_code: newCode } })
-    .then((child) => {
+    .get(`login_code/${login_code}`)
+    .then(({ data: { child } }) => {
       return child;
     });
 };
@@ -39,14 +37,13 @@ export const postParent = (parent_email, parent_name) => {
 };
 
 export const postChildren = (parent_email, star_count, child_name) => {
-  console.log(parent_email, star_count, child_name);
   return axiosInstance
     .post(`parents/${parent_email}/children`, {
       star_count,
       child_name,
     })
-    .then((child) => {
-      return child;
+    .then((res) => {
+      return res.data.child;
     });
 };
 

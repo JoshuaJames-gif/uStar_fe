@@ -5,7 +5,6 @@ import {
   StyleSheet,
   TouchableOpacity,
   Text,
-  Alert,
 } from "react-native";
 import AsyncStorage from "@react-native-community/async-storage";
 import Firebase from "../config/Firebase";
@@ -18,20 +17,20 @@ class Signup extends React.Component {
     password: "",
   };
 
-  storeData = async (value) => {
-    try {
-      const jsonValue = JSON.stringify(value);
-      await AsyncStorage.setItem(
-        "userProfile",
-        JSON.stringify({
-          parent_name: this.state.parent_name,
-          parent_email: this.state.parent_email,
-        })
-      );
-    } catch (e) {
-      console.log(e);
-    }
-  };
+  // storeData = async (value) => {
+  //   try {
+  //     const jsonValue = JSON.stringify(value);
+  //     await AsyncStorage.setItem(
+  //       "userProfile",
+  //       JSON.stringify({
+  //         parent_name: this.state.parent_name,
+  //         parent_email: this.state.parent_email,
+  //       })
+  //     );
+  //   } catch (e) {
+  //     console.log(e);
+  //   }
+  // };
   handleSignUp = (event) => {
     const { parent_name, parent_email, password } = this.state;
     event.preventDefault();
