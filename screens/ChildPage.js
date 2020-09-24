@@ -20,11 +20,14 @@ class ChildPage extends Component {
   };
   getChildByChildId = (child_id) => {
     api.fetchChildByChildId(child_id).then((child) => {
-      this.setState({ child });
+      this.setState({
+        child,
+        isParentLoggedIn: this.props.navigation.state.params.isParentLoggedIn,
+      });
     });
   };
   componentDidMount = () => {
-    this.getChildByChildId(7);
+    this.getChildByChildId(this.props.navigation.state.params.child_id);
   };
   render() {
     const {
@@ -38,6 +41,7 @@ class ChildPage extends Component {
         <Text>
           Hi {child_name}, you currently have {star_count} stars.
         </Text>
+        {/* <ChildProfile/> */}
         <TouchableOpacity
           style={styles.button}
           onPress={() => {
@@ -48,6 +52,7 @@ class ChildPage extends Component {
             {showRewards ? "Show Tasks" : "Show Rewards"}
           </Text>
         </TouchableOpacity>
+        <Text>{!showRewards ? "Tasks" : "Rewards"}</Text>
         {this.state.showRewards ? (
           <RewardsPage
             child_id={child_id}

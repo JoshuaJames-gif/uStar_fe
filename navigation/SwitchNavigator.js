@@ -5,21 +5,21 @@ import Signup from "../screens/Signup";
 import Profile from "../screens/Profile";
 import Home from "../screens/Home";
 import ChildLogin from "../screens/ChildLogin";
-import TasksPage from "../screens/TasksPage";
-import RewardsPage from "../screens/RewardsPage";
-import ChildPage from "../screens/ChildPage";
 
+import ChildPage from "../screens/ChildPage";
+import HowToUse from "../screens/HowToUse";
 const SwitchNavigator = createSwitchNavigator(
   {
     ChildLogin: {
       screen: ChildLogin,
     },
+    ChildPage: {
+      screen: ChildPage,
+    },
     Home: {
       screen: Home,
     },
-    TasksPage: {
-      screen: TasksPage,
-    },
+
     Signup: {
       screen: Signup,
     },
@@ -30,11 +30,9 @@ const SwitchNavigator = createSwitchNavigator(
     Profile: {
       screen: Profile,
     },
-    RewardsPage: {
-      screen: RewardsPage,
-    },
-    ChildPage: {
-      screen: ChildPage,
+
+    HowToUse: {
+      screen: HowToUse,
     },
   },
   {

@@ -2,9 +2,33 @@ import React, { useState, useEffect } from "react";
 import { Button, Image, View, Platform } from "react-native";
 import * as ImagePicker from "expo-image-picker";
 import Constants from "expo-constants";
-
+import AsyncStorage from "@react-native-community/async-storage";
 export default function ImagePickerExample() {
   const [image, setImage] = useState(null);
+
+  const storeData = async (image) => {
+    try {
+      await AsyncStorage.setItem(
+        "image",
+
+        image
+      );
+    } catch (e) {
+      console.log(e);
+    }
+  };
+  const getData = async () => {
+    try {
+      const value = await AsyncStorage.getItem(
+        "image",
+        JSON.stringify(result.uri)
+      );
+      console.log({ value });
+      return value.data != null ? value.data : null;
+    } catch (e) {
+      console.log(e);
+    }
+  };
 
   useEffect(() => {
     (async () => {
@@ -26,8 +50,8 @@ export default function ImagePickerExample() {
       aspect: [4, 3],
       quality: 1,
     });
-
     console.log(result);
+    storeData(result.uri);
 
     if (!result.cancelled) {
       setImage(result.uri);

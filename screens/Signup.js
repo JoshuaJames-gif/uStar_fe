@@ -9,6 +9,8 @@ import {
 import AsyncStorage from "@react-native-community/async-storage";
 import Firebase from "../config/Firebase";
 import * as api from "../utils/api";
+import ButtonStyles from "../styles/buttonStyle";
+import { Button } from "react-native-paper";
 
 class Signup extends React.Component {
   state = {
@@ -17,20 +19,18 @@ class Signup extends React.Component {
     password: "",
   };
 
-  // storeData = async (value) => {
-  //   try {
-  //     const jsonValue = JSON.stringify(value);
-  //     await AsyncStorage.setItem(
-  //       "userProfile",
-  //       JSON.stringify({
-  //         parent_name: this.state.parent_name,
-  //         parent_email: this.state.parent_email,
-  //       })
-  //     );
-  //   } catch (e) {
-  //     console.log(e);
-  //   }
-  // };
+  storeData = async () => {
+    try {
+      await AsyncStorage.setItem(
+        "parent_email",
+
+        this.state.parent_email
+      );
+    } catch (e) {
+      console.log(e);
+    }
+  };
+
   handleSignUp = (event) => {
     const { parent_name, parent_email, password } = this.state;
     event.preventDefault();
@@ -76,7 +76,10 @@ class Signup extends React.Component {
           placeholder="Password"
           secureTextEntry={true}
         />
-        <TouchableOpacity style={styles.button} onPress={this.handleSignUp}>
+        <TouchableOpacity
+          style={ButtonStyles.buttonSignUp}
+          onPress={this.handleSignUp}
+        >
           <Text style={styles.buttonText}>Signup</Text>
         </TouchableOpacity>
         <TouchableOpacity
@@ -129,7 +132,7 @@ const styles = StyleSheet.create({
   buttonText: {
     fontSize: 20,
     fontWeight: "bold",
-    color: "#fff",
+    color: "#666",
   },
   buttonSignUpText: {
     fontSize: 14,
@@ -137,16 +140,15 @@ const styles = StyleSheet.create({
     color: "#fff",
   },
   buttonSignup: {
-    marginTop: 5,
-    marginBottom: 20,
-    paddingVertical: 5,
-    alignItems: "center",
-    backgroundColor: "#E76F51",
-    borderColor: "#E76F51",
-    borderWidth: 1,
     borderRadius: 5,
-    width: 150,
     height: 30,
+    width: 300,
+    backgroundColor: "#fff",
+    overflow: "hidden",
+    borderColor: "#FFA611",
+    alignItems: "center",
+    justifyContent: "center",
+    marginBottom: 35,
   },
 });
 

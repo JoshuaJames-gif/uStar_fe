@@ -11,26 +11,30 @@ import CodeInput from "react-native-confirmation-code-input";
 import * as api from "../utils/api";
 
 class ChildLogin extends Component {
-  state = { code: "" };
+  state = { code: "", isError: false };
 
   _onFulfill3 = (code) => {
     const newCode = Number(code);
     api.getChildByLogin(newCode).then((child) => {
       const isValid = newCode === child.login_code;
       if (isValid) {
-        this.props.navigation.navigate("Signup");
-        return this.setState({ code });
-      }
+        this.props.navigation.navigate("ChildPage", {
+          isParentLoggedIn: false,
+          child_id: child.child_id,
+        });
+        this.setState({ code, isError: false });
+      } else this.setState({ isError: true });
     });
   };
 
   render() {
     return (
       <View style={[styles.inputWrapper, { backgroundColor: "#2F0B3A" }]}>
+        <Text>⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐</Text>
         <Text
           style={[styles.inputLabel, { color: "#fff", textAlign: "center" }]}
         >
-          CIRCLE CONFIRMATION CODE
+          Please ask Mum or Dad for your special login code
         </Text>
         <CodeInput
           ref="codeInputRef3"
@@ -40,6 +44,12 @@ class ChildLogin extends Component {
           codeInputStyle={{ fontWeight: "800" }}
           onFulfill={this._onFulfill3}
         />
+        <Text>⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐</Text>
+        {this.state.isError && (
+          <Text style={styles.errorText}>
+            Sorry, could you try again please?
+          </Text>
+        )}
       </View>
     );
   }
@@ -88,6 +98,11 @@ const styles = StyleSheet.create({
   inputLabel: {
     fontSize: 14,
     fontWeight: "800",
+  },
+  errorText: {
+    fontSize: 14,
+    fontWeight: "800",
+    color: "white",
   },
 });
 

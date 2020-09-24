@@ -7,8 +7,10 @@ import {
   TouchableOpacity,
   TextInput,
   ScrollView,
+  Alert,
 } from "react-native";
 import Firebase from "../config/Firebase";
+import AsyncStorage from "@react-native-community/async-storage";
 
 import ImagesPicker from "../components/ImagePicker";
 
@@ -21,9 +23,22 @@ class Profile extends React.Component {
     parent_name: "",
     parent_email: this.props.navigation.state.params.email,
     parent: "",
+    seeLoginCode: false,
   };
 
+  // getData = async () => {
+  //   try {
+  //     const value = await AsyncStorage.getItem("image");
+  //     console.log({ value });
+  //     // return value.data != null ? value.data : null;
+  //     this.setState({ image: JSON.parse(value) });
+  //   } catch (e) {
+  //     console.log(e);
+  //   }
+  // };
+
   componentDidMount() {
+    // this.getData();
     api
       .getChildrenByParent(this.props.navigation.state.params.email)
       .then((children) => {
@@ -180,12 +195,40 @@ class Profile extends React.Component {
               }}
               style={{ width: 20, height: 20 }}
             ></Image>
-
+            <View>
+              <TouchableOpacity
+                onPress={() => {
+                  this.setState({ seeLoginCode: !this.state.seeLoginCode });
+                }}
+              >
+                <Text>
+                  {" "}
+                  {!this.state.seeLoginCode
+                    ? " Show login Codes"
+                    : "Hide login Codes"}
+                </Text>
+              </TouchableOpacity>
+            </View>
             <View>
               {children.map((child) => (
                 <View key={child.child_id}>
                   <Text>{child.child_name}</Text>
                   <Text>{child.star_count}</Text>
+
+                  <Text>
+                    {!this.state.seeLoginCode ? "" : child.login_code}
+                  </Text>
+
+                  <TouchableOpacity
+                    onPress={() =>
+                      this.props.navigation.navigate("ChildPage", {
+                        isParentLoggedIn: true,
+                        child_id: child.child_id,
+                      })
+                    }
+                  >
+                    <Text>View</Text>
+                  </TouchableOpacity>
                   <TouchableOpacity
                     onPress={() => this.handleDelete(child.child_id)}
                   >

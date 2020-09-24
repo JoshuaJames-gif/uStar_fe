@@ -17,21 +17,26 @@ class Home extends Component {
           style={styles.buttonLogin}
           onPress={() => this.props.navigation.navigate("Login")}
         >
-          <Text style={styles.buttonText}>Parent Login</Text>
+          <Text style={styles.buttonText}>Parent</Text>
         </TouchableOpacity>
         <TouchableOpacity
           style={styles.buttonLogin}
           onPress={() => this.props.navigation.navigate("ChildLogin")}
         >
-          <Text style={styles.buttonText}>Children Login </Text>
+          <Text style={styles.buttonText}>Child </Text>
+        </TouchableOpacity>
+
+        <TouchableOpacity
+          style={styles.buttonSignUp}
+          onPress={() => this.props.navigation.navigate("HowToUse")}
+        >
+          <Text style={[styles.signUpText]}>How to use</Text>
         </TouchableOpacity>
         <TouchableOpacity
           style={styles.buttonSignUp}
           onPress={() => this.props.navigation.navigate("Signup")}
         >
-          <Text style={styles.buttonText}>
-            Don't have an account yet? Sign up
-          </Text>
+          <Text style={styles.signUpText}>Sign Up</Text>
         </TouchableOpacity>
       </View>
     );
@@ -44,7 +49,8 @@ const styles = StyleSheet.create({
     width: 500,
     alignItems: "center",
     justifyContent: "center",
-    backgroundColor: "#fff",
+
+    marginTop: 10,
     borderRadius: 5,
     borderTopLeftRadius: 20,
     borderTopRightRadius: 20,
@@ -56,7 +62,7 @@ const styles = StyleSheet.create({
     borderRadius: 5,
     height: 30,
     width: 300,
-    backgroundColor: "#FFA611",
+    backgroundColor: "#fff",
     overflow: "hidden",
     borderColor: "#FFA611",
     alignItems: "center",
@@ -65,21 +71,26 @@ const styles = StyleSheet.create({
   },
   buttonText: {
     fontSize: 15,
-    fontWeight: "bold",
-    color: "#fff",
+    color: "#083464",
+    // opacity: 0.5,
+  },
+  signUpText: {
+    fontSize: 15,
+    color: "yellow",
   },
   buttonSignUp: {
     fontSize: 12,
     borderRadius: 5,
     height: 30,
     width: 300,
-    backgroundColor: "#FFA611",
+    backgroundColor: "#083464",
     overflow: "hidden",
-    borderColor: "#FFA611",
+    borderColor: "yellow",
+    borderWidth: 2,
     alignItems: "center",
     justifyContent: "center",
-    marginBottom: -100,
-    marginTop: 60,
+    marginTop: 2,
+    marginBottom: 5,
   },
 });
 
