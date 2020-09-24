@@ -38,11 +38,7 @@ const SwitchNavigator = createSwitchNavigator(
     },
   },
   {
-<<<<<<< HEAD
     initialRouteName: "Home",
-=======
-    initialRouteName: "ChildPage",
->>>>>>> 71f8fbe698722362f7dfba41e896b4e9fc04e490
   }
 );
 
