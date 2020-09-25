@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import * as api from "../utils/api";
-
+import ButtonStyles from "../styles/buttonStyle";
 import {
   View,
   TextInput,
@@ -9,6 +9,8 @@ import {
   Text,
   Button,
   ScrollView,
+  ImageBackground,
+  Image,
 } from "react-native";
 import TasksPage from "./TasksPage";
 import RewardsPage from "./RewardsPage";
@@ -17,6 +19,10 @@ class ChildPage extends Component {
     isParentLoggedIn: false,
     child: {},
     showRewards: false,
+  };
+  image = {
+    uri:
+      "https://i.pinimg.com/originals/b5/02/8c/b5028c0b0bc508d54721514939b164ac.jpg",
   };
   getChildByChildId = (child_id) => {
     api.fetchChildByChildId(child_id).then((child) => {
@@ -38,64 +44,89 @@ class ChildPage extends Component {
 
     return (
       <View style={styles.container}>
-        <Text>
-          Hi {child_name}, you currently have {star_count} stars.
-        </Text>
-        {/* <ChildProfile/> */}
-        <TouchableOpacity
-          style={styles.button}
-          onPress={() => {
-            this.setState({ showRewards: !showRewards });
-          }}
-        >
-          <Text style={styles.buttonText}>
-            {showRewards ? "Show Tasks" : "Show Rewards"}
+        <ImageBackground source={this.image} style={styles.image}>
+          <View
+            style={{
+              flexDirection: "row",
+              flexWrap: "wrap",
+              justifyContent: "center",
+              alignContent: "center",
+            }}
+          >
+            {isParentLoggedIn && (
+              <TouchableOpacity
+                style={ButtonStyles.listButtons}
+                onPress={() => {
+                  this.props.navigation.navigate("Profile");
+                }}
+              >
+                <Text style={styles.buttonText}> ↰ Profile</Text>
+              </TouchableOpacity>
+            )}
+            <TouchableOpacity
+              style={ButtonStyles.listButtons}
+              onPress={() => {
+                this.setState({ showRewards: !showRewards });
+              }}
+            >
+              <Text style={styles.buttonText}>
+                {showRewards ? "Tasks" : "Rewards"}
+              </Text>
+            </TouchableOpacity>
+          </View>
+          <Text style={ButtonStyles.Title}>
+            {!showRewards ? "Tasks" : "Rewards"}
           </Text>
-        </TouchableOpacity>
-        <Text>{!showRewards ? "Tasks" : "Rewards"}</Text>
-        {this.state.showRewards ? (
-          <RewardsPage
-            child_id={child_id}
-            isParentLoggedIn={isParentLoggedIn}
-            getChildByChildId={this.getChildByChildId}
+          {isParentLoggedIn ? (
+            <Text style={{ color: "yellow", marginBottom: 10, marginTop: 10 }}>
+              {child_name} has {star_count} ⭐
+            </Text>
+          ) : (
+            <Text style={{ color: "yellow", marginBottom: 10, marginTop: 10 }}>
+              Hi {child_name}, you have {star_count} ⭐
+            </Text>
+          )}
+
+          {this.state.showRewards ? (
+            <RewardsPage
+              child_id={child_id}
+              isParentLoggedIn={isParentLoggedIn}
+              getChildByChildId={this.getChildByChildId}
+            />
+          ) : (
+            <TasksPage
+              child_id={child_id}
+              isParentLoggedIn={isParentLoggedIn}
+              getChildByChildId={this.getChildByChildId}
+            />
+          )}
+          <Image
+            style={{
+              width: 200,
+              height: 100,
+              flex: 0.5,
+              alignItems: "left",
+              justifyContent: "left",
+            }}
+            source={require("../images/newLogo8.png")}
           />
-        ) : (
-          <TasksPage
-            child_id={child_id}
-            isParentLoggedIn={isParentLoggedIn}
-            getChildByChildId={this.getChildByChildId}
-          />
-        )}
+        </ImageBackground>
       </View>
     );
   }
 }
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: "#ffff",
+    backgroundColor: "#fff",
     alignItems: "center",
     justifyContent: "center",
     flex: 1,
     height: 300,
     width: 500,
     overflow: "hidden",
-    borderRadius: 5,
-    borderTopLeftRadius: 20,
-    borderTopRightRadius: 20,
-    borderBottomLeftRadius: 20,
-    borderBottomRightRadius: 20,
+    padding: 20,
   },
-  listItem: {
-    padding: 10,
-    borderTopWidth: 5,
-    borderBottomWidth: 5,
-    borderColor: "black",
-  },
-  list: {
-    margin: 20,
-    justifyContent: "center",
-    alignItems: "center",
-  },
+
   button: {
     marginTop: 30,
     marginBottom: 20,
@@ -106,6 +137,12 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderRadius: 5,
     width: 200,
+  },
+  image: {
+    height: "100%",
+    width: "100%",
+    justifyContent: "center",
+    alignItems: "center",
   },
   disabledButton: {
     marginTop: 30,
@@ -119,7 +156,7 @@ const styles = StyleSheet.create({
     width: 200,
   },
   buttonText: {
-    fontSize: 20,
+    fontSize: 12,
     fontWeight: "bold",
     color: "#fff",
   },

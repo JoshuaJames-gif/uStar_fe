@@ -7,7 +7,7 @@ import {
   TouchableOpacity,
 } from "react-native";
 import * as api from "../utils/api";
-
+import ButtonStyles from "../styles/buttonStyle";
 const RewardsList = (props) => {
   const handleBuy = (child_id, star_cost) => {
     api.patchChild(child_id, -star_cost).then(() => {
@@ -23,11 +23,11 @@ const RewardsList = (props) => {
           const { reward_id, reward_description, star_cost, child_id } = reward;
           return (
             <View key={reward_id} style={styles.listItem}>
-              <Text>The reward is {reward_description}</Text>
-              <Text>Costs {star_cost} ⭐</Text>
+              <Text style={ButtonStyles.listText}>{reward_description}</Text>
+              <Text style={ButtonStyles.smallListText}>{star_cost} ⭐</Text>
               {!isParentLoggedIn && (
                 <TouchableOpacity
-                  style={styles.button}
+                  style={ButtonStyles.listButtons}
                   onPress={() => {
                     handleBuy(child_id, star_cost);
                   }}
@@ -36,7 +36,7 @@ const RewardsList = (props) => {
                 </TouchableOpacity>
               )}
               <TouchableOpacity
-                style={styles.button}
+                style={ButtonStyles.deleteButtons}
                 onPress={() => {
                   handleDeleteReward(reward_id);
                 }}
@@ -67,14 +67,17 @@ const styles = StyleSheet.create({
   },
   listItem: {
     padding: 10,
-    borderTopWidth: 5,
-    borderBottomWidth: 5,
-    borderColor: "black",
+    borderTopWidth: 1,
+    borderColor: "#001a34",
+    alignItems: "center",
+    justifyContent: "center",
   },
   list: {
     margin: 20,
     justifyContent: "center",
     alignItems: "center",
+    borderBottomWidth: 1,
+    borderColor: "#001a34",
   },
   button: {
     marginTop: 30,
@@ -99,7 +102,7 @@ const styles = StyleSheet.create({
     width: 200,
   },
   buttonText: {
-    fontSize: 20,
+    fontSize: 12,
     fontWeight: "bold",
     color: "#fff",
   },

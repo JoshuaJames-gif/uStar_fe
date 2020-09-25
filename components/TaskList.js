@@ -5,8 +5,9 @@ import {
   TouchableOpacity,
   Text,
   ScrollView,
+  ImageBackground,
 } from "react-native";
-
+import ButtonStyles from "../styles/buttonStyle";
 const TaskList = (props) => {
   const {
     tasks,
@@ -22,9 +23,9 @@ const TaskList = (props) => {
 
           return (
             <View key={task_id} style={styles.listItem}>
-              <Text>The task is to {task_description}</Text>
-              <Text>Is worth {stars_worth} ⭐</Text>
-              <Text>Status: {task_status}</Text>
+              <Text style={ButtonStyles.listText}>{task_description}</Text>
+              <Text style={ButtonStyles.smallListText}>{stars_worth} ⭐</Text>
+              <Text style={ButtonStyles.smallListText}>{task_status}</Text>
               {isParentLoggedIn ? (
                 <View>
                   <TouchableOpacity
@@ -33,8 +34,8 @@ const TaskList = (props) => {
                     }
                     style={
                       task_status === "completed"
-                        ? styles.disabledButton
-                        : styles.button
+                        ? ButtonStyles.disabledButton
+                        : ButtonStyles.listButtons
                     }
                     disabled={task_status === "completed"}
                   >
@@ -44,17 +45,17 @@ const TaskList = (props) => {
                   </TouchableOpacity>
                   <TouchableOpacity
                     onPress={() => handleDeleteTask(task_id)}
-                    style={styles.button}
+                    style={ButtonStyles.deleteButtons}
                   >
-                    <Text style={styles.buttonText}>Delete </Text>
+                    <Text style={styles.buttonText}>Remove</Text>
                   </TouchableOpacity>
                 </View>
               ) : (
                 <TouchableOpacity
                   style={
                     task_status === "pending"
-                      ? styles.disabledButton
-                      : styles.button
+                      ? ButtonStyles.disabledButton
+                      : ButtonStyles.listButtons
                   }
                   disabled={task_status === "pending"}
                   onPress={() => {
@@ -89,39 +90,38 @@ const styles = StyleSheet.create({
   },
   listItem: {
     padding: 10,
-    borderTopWidth: 5,
-    borderBottomWidth: 5,
-    borderColor: "black",
+    borderTopWidth: 1,
+    borderColor: "#001a34",
+    alignItems: "center",
+    width: "100%",
+    justifyContent: "center",
   },
   list: {
-    margin: 20,
+    // margin: 20,
     justifyContent: "center",
     alignItems: "center",
+    width: "100%",
+
+    borderColor: "#001a34",
   },
   button: {
     marginTop: 30,
     marginBottom: 20,
     paddingVertical: 5,
     alignItems: "center",
+
     backgroundColor: "#E76F51",
     borderColor: "#E76F51",
     borderWidth: 1,
     borderRadius: 5,
     width: 200,
   },
-  disabledButton: {
-    marginTop: 30,
-    marginBottom: 20,
-    paddingVertical: 5,
-    alignItems: "center",
-    backgroundColor: "gray",
-    borderColor: "gray",
-    borderWidth: 1,
-    borderRadius: 5,
-    width: 200,
-  },
+
   buttonText: {
-    fontSize: 20,
+    // paddingVertical: 1,
+    // alignItems: "middle",
+
+    fontSize: 12,
     fontWeight: "bold",
     color: "#fff",
   },

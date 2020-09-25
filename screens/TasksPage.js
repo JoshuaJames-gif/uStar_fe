@@ -8,6 +8,7 @@ import {
   Text,
   Button,
   ScrollView,
+  ImageBackground,
 } from "react-native";
 import TaskList from "../components/TaskList";
 import * as api from "../utils/api";
@@ -50,6 +51,7 @@ class TasksPage extends Component {
       this.getTasks(this.props.child_id);
     }
   };
+
   render() {
     const { isParentLoggedIn, child_id } = this.props;
 
@@ -82,30 +84,21 @@ class TasksPage extends Component {
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: "#ffff",
+    // backgroundColor: "#D5DBDB",
+    backgroundColor: "#ccd3c6",
     alignItems: "center",
     justifyContent: "center",
     flex: 1,
     height: 300,
-    width: 500,
+    width: "100%",
     overflow: "hidden",
-    borderRadius: 5,
-    borderTopLeftRadius: 20,
-    borderTopRightRadius: 20,
-    borderBottomLeftRadius: 20,
-    borderBottomRightRadius: 20,
+    // borderRadius: 5,
+    // borderTopLeftRadius: 20,
+    // borderTopRightRadius: 20,
+    // borderBottomLeftRadius: 20,
+    // borderBottomRightRadius: 20,
   },
-  listItem: {
-    padding: 10,
-    borderTopWidth: 5,
-    borderBottomWidth: 5,
-    borderColor: "black",
-  },
-  list: {
-    margin: 20,
-    justifyContent: "center",
-    alignItems: "center",
-  },
+
   button: {
     marginTop: 30,
     marginBottom: 20,

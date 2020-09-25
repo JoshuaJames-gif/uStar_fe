@@ -11,6 +11,7 @@ import {
   ScrollView,
 } from "react-native";
 import * as api from "../utils/api";
+import ButtonStyles from "../styles/buttonStyle";
 class PostTask extends Component {
   state = { newTask: { task_description: "", stars_worth: "" } };
   handlePost = (child_id, task_description, stars_worth) => {
@@ -54,8 +55,8 @@ class PostTask extends Component {
             <TouchableOpacity
               style={
                 newTask.task_description === "" || newTask.stars_worth === ""
-                  ? styles.disabledButton
-                  : styles.button
+                  ? ButtonStyles.disabledButton
+                  : ButtonStyles.listButtons
               }
               disabled={
                 newTask.task_description === "" || newTask.stars_worth === ""
@@ -95,7 +96,7 @@ const styles = StyleSheet.create({
     padding: 10,
     borderTopWidth: 5,
     borderBottomWidth: 5,
-    borderColor: "black",
+    borderColor: "#001a34",
   },
   list: {
     margin: 20,
@@ -125,7 +126,7 @@ const styles = StyleSheet.create({
     width: 200,
   },
   buttonText: {
-    fontSize: 20,
+    fontSize: 12,
     fontWeight: "bold",
     color: "#fff",
   },

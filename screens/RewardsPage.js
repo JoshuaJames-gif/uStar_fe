@@ -77,7 +77,7 @@ class RewardsPage extends Component {
 }
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: "#ffff",
+    backgroundColor: "#D5DBDB",
     alignItems: "center",
     justifyContent: "center",
     flex: 1,
@@ -89,12 +89,13 @@ const styles = StyleSheet.create({
     borderTopRightRadius: 20,
     borderBottomLeftRadius: 20,
     borderBottomRightRadius: 20,
+    margin: 20,
   },
   listItem: {
     padding: 10,
     borderTopWidth: 5,
     borderBottomWidth: 5,
-    borderColor: "black",
+    borderColor: "#001a34",
   },
   list: {
     margin: 20,
