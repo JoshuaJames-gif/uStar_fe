@@ -9,7 +9,8 @@ export const getParent = (parent_email, parent_name) => {
     .get(`parents/${parent_email}`, { parent_email, parent_name })
     .then(({ data: { parent } }) => {
       return parent;
-    });
+    })
+    .catch((err) => err);
 };
 
 export const getChildByLogin = (login_code) => {
@@ -17,7 +18,8 @@ export const getChildByLogin = (login_code) => {
     .get(`login_code/${login_code}`)
     .then(({ data: { child } }) => {
       return child;
-    });
+    })
+    .catch((err) => err);
 };
 
 export const getChildrenByParent = (parent_email) => {
@@ -33,7 +35,8 @@ export const postParent = (parent_email, parent_name) => {
     .post("parents", { parent_email, parent_name })
     .then((parents) => {
       return parents;
-    });
+    })
+    .catch((err) => err);
 };
 
 export const postChildren = (parent_email, star_count, child_name) => {

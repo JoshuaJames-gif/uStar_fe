@@ -22,7 +22,7 @@ const HowToUse = (props) => {
         style={styles.buttonSignUp}
         onPress={() => props.navigation.navigate("Home")}
       >
-        <Text style={styles.signUpText}>Back to Home</Text>
+        <Text style={styles.signUpText}>↰ Home</Text>
       </TouchableOpacity>
     </View>
   );
@@ -55,8 +55,8 @@ const styles = StyleSheet.create({
   },
   signUpText: {
     fontSize: 15,
-    fontWeight: "bold",
-    color: "yellow",
+
+    color: "white",
   },
   buttonSignUp: {
     fontSize: 12,

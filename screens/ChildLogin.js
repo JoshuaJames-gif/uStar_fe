@@ -30,11 +30,11 @@ class ChildLogin extends Component {
   render() {
     return (
       <View style={[styles.inputWrapper, { backgroundColor: "#2F0B3A" }]}>
-        <Text>⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐</Text>
-        <Text
-          style={[styles.inputLabel, { color: "#fff", textAlign: "center" }]}
-        >
-          Please ask Mum or Dad for your special login code
+        <Text style={{ marginBottom: 10 }}>
+          ⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐
+        </Text>
+        <Text style={{ color: "#fff", textAlign: "center" }}>
+          Please ask parent/ guardian for your special login code
         </Text>
         <CodeInput
           ref="codeInputRef3"
@@ -44,12 +44,18 @@ class ChildLogin extends Component {
           codeInputStyle={{ fontWeight: "800" }}
           onFulfill={this._onFulfill3}
         />
-        <Text>⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐</Text>
+        <Text style={{ marginTop: 10 }}>⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐</Text>
         {this.state.isError && (
           <Text style={styles.errorText}>
             Sorry, could you try again please?
           </Text>
         )}
+        <TouchableOpacity
+          style={styles.buttonSignup}
+          onPress={() => this.props.navigation.navigate("Home")}
+        >
+          <Text style={styles.buttonSignUpText}>↰ Back</Text>
+        </TouchableOpacity>
       </View>
     );
   }
@@ -91,9 +97,29 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
     color: "#fff",
   },
+  buttonSignUpText: {
+    fontSize: 15,
+    color: "#fff",
+  },
+  buttonSignup: {
+    borderRadius: 5,
+    height: 30,
+    width: 100,
+    backgroundColor: "#083464",
+    overflow: "hidden",
+    borderColor: "yellow",
+    borderWidth: 2,
+    alignItems: "center",
+    justifyContent: "center",
+    marginTop: 20,
+    marginBottom: 5,
+  },
   inputWrapper: {
     paddingVertical: 50,
     paddingHorizontal: 20,
+    margin: 10,
+    alignItems: "center",
+    justifyContent: "center",
   },
   inputLabel: {
     fontSize: 14,
@@ -102,7 +128,7 @@ const styles = StyleSheet.create({
   errorText: {
     fontSize: 14,
     fontWeight: "800",
-    color: "white",
+    color: "red",
   },
 });
 

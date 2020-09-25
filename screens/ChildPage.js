@@ -58,7 +58,9 @@ class ChildPage extends Component {
               <TouchableOpacity
                 style={ButtonStyles.listButtons}
                 onPress={() => {
-                  this.props.navigation.navigate("Profile");
+                  this.props.navigation.navigate("Profile", {
+                    email: this.state.child.parent_email,
+                  });
                 }}
               >
                 <Text style={styles.buttonText}> ↰ Profile</Text>

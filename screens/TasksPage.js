@@ -1,5 +1,4 @@
 import React, { Component } from "react";
-// import { render } from "react-dom";
 import {
   View,
   TextInput,
@@ -84,7 +83,6 @@ class TasksPage extends Component {
 
 const styles = StyleSheet.create({
   container: {
-    // backgroundColor: "#D5DBDB",
     backgroundColor: "#ccd3c6",
     alignItems: "center",
     justifyContent: "center",
@@ -92,11 +90,6 @@ const styles = StyleSheet.create({
     height: 300,
     width: "100%",
     overflow: "hidden",
-    // borderRadius: 5,
-    // borderTopLeftRadius: 20,
-    // borderTopRightRadius: 20,
-    // borderBottomLeftRadius: 20,
-    // borderBottomRightRadius: 20,
   },
 
   button: {

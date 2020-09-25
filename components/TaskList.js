@@ -33,11 +33,15 @@ const TaskList = (props) => {
                       handleReviewPushByChild(task_id, "completed")
                     }
                     style={
-                      task_status === "completed"
+                      task_status === "completed" ||
+                      task_status === "outstanding"
                         ? ButtonStyles.disabledButton
                         : ButtonStyles.listButtons
                     }
-                    disabled={task_status === "completed"}
+                    disabled={
+                      task_status === "completed" ||
+                      task_status === "outstanding"
+                    }
                   >
                     <Text id={task_id} style={styles.buttonText}>
                       Confirm request
@@ -53,11 +57,13 @@ const TaskList = (props) => {
               ) : (
                 <TouchableOpacity
                   style={
-                    task_status === "pending"
+                    task_status === "pending" || task_status === "completed"
                       ? ButtonStyles.disabledButton
                       : ButtonStyles.listButtons
                   }
-                  disabled={task_status === "pending"}
+                  disabled={
+                    task_status === "pending" || task_status === "completed"
+                  }
                   onPress={() => {
                     handleReviewPushByChild(task_id, "pending");
                   }}
@@ -97,11 +103,9 @@ const styles = StyleSheet.create({
     justifyContent: "center",
   },
   list: {
-    // margin: 20,
     justifyContent: "center",
     alignItems: "center",
     width: "100%",
-
     borderColor: "#001a34",
   },
   button: {
@@ -118,9 +122,6 @@ const styles = StyleSheet.create({
   },
 
   buttonText: {
-    // paddingVertical: 1,
-    // alignItems: "middle",
-
     fontSize: 12,
     fontWeight: "bold",
     color: "#fff",

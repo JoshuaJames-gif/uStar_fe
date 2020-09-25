@@ -8,7 +8,6 @@ import {
   Alert,
   Image,
 } from "react-native";
-import Firebase from "../config/Firebase";
 
 class Home extends Component {
   render() {
@@ -41,7 +40,7 @@ class Home extends Component {
           style={styles.buttonSignUp}
           onPress={() => this.props.navigation.navigate("Signup")}
         >
-          <Text style={styles.signUpText}>Sign Up</Text>
+          <Text style={styles.signUpText}>Sign up</Text>
         </TouchableOpacity>
       </View>
     );
@@ -76,7 +75,6 @@ const styles = StyleSheet.create({
   buttonText: {
     fontSize: 15,
     color: "#083464",
-    // opacity: 0.5,
   },
   signUpText: {
     fontSize: 15,

@@ -17,25 +17,13 @@ class Signup extends React.Component {
     parent_name: "",
     parent_email: "",
     password: "",
-  };
-
-  storeData = async () => {
-    try {
-      await AsyncStorage.setItem(
-        "parent_email",
-
-        this.state.parent_email
-      );
-    } catch (e) {
-      console.log(e);
-    }
+    isError: false,
   };
 
   handleSignUp = (event) => {
     const { parent_name, parent_email, password } = this.state;
     event.preventDefault();
     api.postParent(parent_email, parent_name);
-    this.storeData();
     Firebase.auth()
       .createUserWithEmailAndPassword(parent_email, password)
       .then(() =>
@@ -44,10 +32,10 @@ class Signup extends React.Component {
           name: this.state.parent_name,
         })
       )
-      .catch((error) => console.log(error));
+      .catch((error) => this.setState({ isError: true }));
   };
-  handleBackToLogin = () => {
-    this.props.navigation.navigate("Login", {
+  handleBackHome = () => {
+    this.props.navigation.navigate("Home", {
       email: this.state.parent_email,
       name: this.state.parent_name,
     });
@@ -77,16 +65,32 @@ class Signup extends React.Component {
           secureTextEntry={true}
         />
         <TouchableOpacity
-          style={ButtonStyles.buttonSignUp}
+          style={
+            this.state.parent_email === "" ||
+            this.state.parent_name === "" ||
+            this.state.password === ""
+              ? styles.disabledButton
+              : ButtonStyles.buttonSignUp
+          }
           onPress={this.handleSignUp}
+          disabled={
+            this.state.parent_email === "" ||
+            this.state.parent_name === "" ||
+            this.state.password === ""
+          }
         >
-          <Text style={styles.buttonText}>Signup</Text>
+          <Text style={styles.buttonText}>Sign up</Text>
         </TouchableOpacity>
+        {this.state.isError && (
+          <Text style={styles.errorText}>
+            Sorry, could you try again please?
+          </Text>
+        )}
         <TouchableOpacity
-          style={styles.buttonSignup}
-          onPress={this.handleBackToLogin}
+          style={ButtonStyles.buttonSignUp}
+          onPress={this.handleBackHome}
         >
-          <Text style={styles.buttonSignUpText}>Back to Login!</Text>
+          <Text style={styles.buttonSignUpText}>↰ Home</Text>
         </TouchableOpacity>
       </View>
     );
@@ -99,7 +103,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
 
-    flex: 0.5,
+    flex: 0.7,
     height: 500,
     width: 500,
     overflow: "hidden",
@@ -108,6 +112,17 @@ const styles = StyleSheet.create({
     borderTopRightRadius: 20,
     borderBottomLeftRadius: 20,
     borderBottomRightRadius: 20,
+  },
+  disabledButton: {
+    marginTop: 30,
+    marginBottom: 20,
+    paddingVertical: 5,
+    alignItems: "center",
+    backgroundColor: "gray",
+    borderColor: "gray",
+    borderWidth: 1,
+    borderRadius: 5,
+    width: 300,
   },
   inputBox: {
     width: "85%",
@@ -131,13 +146,16 @@ const styles = StyleSheet.create({
   },
   buttonText: {
     fontSize: 20,
-    fontWeight: "bold",
-    color: "#666",
+    color: "white",
+  },
+  errorText: {
+    fontSize: 14,
+    fontWeight: "800",
+    color: "red",
   },
   buttonSignUpText: {
     fontSize: 14,
-    fontWeight: "bold",
-    color: "#fff",
+    color: "white",
   },
   buttonSignup: {
     borderRadius: 5,

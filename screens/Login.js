@@ -6,15 +6,15 @@ import {
   TouchableOpacity,
   Text,
 } from "react-native";
-import AsyncStorage from "@react-native-community/async-storage";
+
 import Firebase from "../config/Firebase";
-import * as api from "../utils/api";
 
 class Login extends React.Component {
   state = {
     parent_name: "",
     parent_email: "",
     password: "",
+    isError: false,
   };
   handleLogin = () => {
     const { parent_name, parent_email, password } = this.state;
@@ -27,7 +27,7 @@ class Login extends React.Component {
           name: this.state.parent_name,
         })
       )
-      .catch((error) => console.log(error));
+      .catch((error) => this.setState({ isError: true }));
   };
 
   render() {
@@ -50,14 +50,22 @@ class Login extends React.Component {
         <TouchableOpacity style={styles.button} onPress={this.handleLogin}>
           <Text style={styles.buttonText}>Login</Text>
         </TouchableOpacity>
-
+        {this.state.isError && (
+          <Text style={styles.errorText}>
+            Sorry, could you try again please?
+          </Text>
+        )}
         <TouchableOpacity
           style={styles.buttonSignup}
           onPress={() => this.props.navigation.navigate("Signup")}
         >
-          <Text style={styles.buttonSignUpText}>
-            Don't have an account yet? Sign up
-          </Text>
+          <Text style={styles.buttonSignUpText}>Register</Text>
+        </TouchableOpacity>
+        <TouchableOpacity
+          style={styles.buttonSignup}
+          onPress={() => this.props.navigation.navigate("Home")}
+        >
+          <Text style={styles.buttonSignUpText}>↰ Back</Text>
         </TouchableOpacity>
       </View>
     );
@@ -88,36 +96,45 @@ const styles = StyleSheet.create({
     textAlign: "center",
   },
   button: {
-    marginTop: 30,
-    marginBottom: 20,
-    paddingVertical: 5,
-    alignItems: "center",
-    backgroundColor: "#E76F51",
-    borderColor: "#E76F51",
-    borderWidth: 1,
+    fontSize: 12,
     borderRadius: 5,
-    width: 200,
+    height: 30,
+    width: 300,
+    backgroundColor: "#083464",
+    overflow: "hidden",
+    borderColor: "yellow",
+    borderWidth: 2,
+    alignItems: "center",
+    justifyContent: "center",
+    marginTop: 2,
+    marginBottom: 5,
   },
   buttonText: {
     fontSize: 20,
-    fontWeight: "bold",
     color: "#fff",
   },
   buttonSignUpText: {
     fontSize: 15,
-    fontWeight: "bold",
     color: "#fff",
+  },
+  errorText: {
+    fontSize: 14,
+    fontWeight: "800",
+    color: "red",
   },
   buttonSignup: {
     fontSize: 12,
     borderRadius: 5,
     height: 30,
     width: 300,
-    backgroundColor: "#FFA611",
+    backgroundColor: "#083464",
     overflow: "hidden",
-    borderColor: "#FFA611",
+    borderColor: "yellow",
+    borderWidth: 2,
     alignItems: "center",
     justifyContent: "center",
+    marginTop: 2,
+    marginBottom: 5,
   },
 });
 

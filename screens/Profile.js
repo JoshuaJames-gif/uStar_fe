@@ -10,7 +10,6 @@ import {
   Alert,
 } from "react-native";
 import Firebase from "../config/Firebase";
-import ButtonStyles from "../styles/buttonStyle";
 
 import * as api from "../utils/api";
 
@@ -24,19 +23,7 @@ class Profile extends React.Component {
     seeLoginCode: false,
   };
 
-  // getData = async () => {
-  //   try {
-  //     const value = await AsyncStorage.getItem("image");
-  //     console.log({ value });
-  //     // return value.data != null ? value.data : null;
-  //     this.setState({ image: JSON.parse(value) });
-  //   } catch (e) {
-  //     console.log(e);
-  //   }
-  // };
-
   componentDidMount() {
-    // this.getData();
     api
       .getChildrenByParent(this.props.navigation.state.params.email)
       .then((children) => {
@@ -126,7 +113,9 @@ class Profile extends React.Component {
             style={{
               alignSelf: "center",
               flexDirection: "row",
-              justifyContent: "center",
+              flexWrap: "wrap",
+              justifyContent: "space-evenly",
+
               backgroundColor: "#083464",
               borderColor: "yellow",
               borderWidth: 2,
@@ -168,9 +157,6 @@ class Profile extends React.Component {
           </View>
           <View
             style={{
-              // alignSelf: "center",
-              // flexDirection: "row",
-              // justifyContent: "center",
               backgroundColor: "#083464",
               borderColor: "yellow",
               borderWidth: 2,
@@ -199,32 +185,18 @@ class Profile extends React.Component {
                     style={{
                       fontSize: 20,
                       color: "yellow",
-                      marginRight: 20,
-                      marginLeft: 10,
+                      marginRight: 10,
+                      marginLeft: 1,
+                      marginTop: 6,
                     }}
                   >
                     {child.child_name}
                   </Text>
 
-                  <Text
-                    style={{ fontSize: 15, color: "yellow", marginRight: 35 }}
-                  >
-                    {child.star_count}
+                  <Text style={{ fontSize: 15, color: "yellow", marginTop: 6 }}>
+                    {child.star_count} ⭐
                   </Text>
 
-                  <Text style={{ color: "yellow", marginRight: 10 }}>
-                    {!this.state.seeLoginCode ? "" : child.login_code}
-                  </Text>
-
-                  <TouchableOpacity
-                    style={styles.ViewDeleteButtons}
-                    onPress={() =>
-                      this.props.navigation.navigate("ChildPage", {
-                        isParentLoggedIn: true,
-                        child_id: child.child_id,
-                      })
-                    }
-                  ></TouchableOpacity>
                   <TouchableOpacity
                     style={styles.ViewButtons}
                     onPress={() =>
@@ -243,6 +215,9 @@ class Profile extends React.Component {
                   >
                     <Text style={{ fontSize: 10, color: "white" }}>Delete</Text>
                   </TouchableOpacity>
+                  <Text style={{ color: "yellow", marginRight: 10 }}>
+                    {!this.state.seeLoginCode ? "" : child.login_code}
+                  </Text>
                 </View>
               ))}
             </View>
@@ -298,13 +273,13 @@ const styles = StyleSheet.create({
     color: "#fff",
     padding: 8,
     margin: 10,
-    width: 200,
+    width: 150,
   },
   addChild: {
     fontSize: 12,
     borderRadius: 5,
     height: 30,
-    width: 100,
+    width: 80,
     backgroundColor: "#083464",
     overflow: "hidden",
     borderColor: "yellow",
@@ -339,7 +314,6 @@ const styles = StyleSheet.create({
     color: "yellow",
   },
   ViewButtons: {
-    justifyContent: "space-evenly",
     borderRadius: 5,
     height: 30,
     width: 40,
@@ -351,11 +325,8 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     marginTop: 3,
     marginBottom: 3,
-    // marginRight: 5,
-    marginLeft: 20,
   },
   DeleteButtons: {
-    justifyContent: "space-evenly",
     borderRadius: 5,
     height: 30,
     width: 40,
@@ -367,7 +338,7 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     marginTop: 3,
     marginBottom: 3,
-    // marginRight: 5,
+
     marginLeft: 10,
   },
 });
