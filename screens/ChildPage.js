@@ -51,6 +51,7 @@ class ChildPage extends Component {
               flexWrap: "wrap",
               justifyContent: "center",
               alignContent: "center",
+              marginTop: 20,
             }}
           >
             {isParentLoggedIn && (

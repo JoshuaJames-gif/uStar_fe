@@ -10,9 +10,7 @@ import {
   Alert,
 } from "react-native";
 import Firebase from "../config/Firebase";
-import AsyncStorage from "@react-native-community/async-storage";
-
-import ImagesPicker from "../components/ImagePicker";
+import ButtonStyles from "../styles/buttonStyle";
 
 import * as api from "../utils/api";
 
@@ -94,36 +92,33 @@ class Profile extends React.Component {
     return (
       <View>
         <ScrollView showsVerticalScrollIndicator={false}>
-          <View
-            style={{
-              padding: 10,
-              width: "100%",
-              backgroundColor: "#100",
-              height: 150,
-            }}
-          >
-            <TouchableOpacity>
-              <Image
-                source={require("../images/smiling-gold-star.png")}
-                style={{ width: 30, height: 30 }}
-              ></Image>
-            </TouchableOpacity>
-          </View>
-          <View style={{ alignItems: "center" }}>
+          <View>
             <Image
-              source={require("../images/smiling-gold-star.png")}
-              stylep={{
-                width: 140,
-                height: 140,
-                borderRadius: 100,
-                marginTop: -70,
+              source={require("../images/newLogo8.png")}
+              style={{
+                alignSelf: "center",
+                flexDirection: "row",
+                justifyContent: "center",
+                width: 250,
+                height: 300,
+                marginTop: -50,
+                marginRight: 36,
               }}
             ></Image>
-            <ImagesPicker />
-            <Text style={{ fontSize: 25, fontWeight: "bold", padding: 10 }}>
+          </View>
+          <View style={{ alignItems: "center" }}>
+            <Text
+              style={{
+                fontSize: 25,
+                fontWeight: "bold",
+                color: "yellow",
+                padding: 10,
+                marginTop: -50,
+              }}
+            >
               {this.state.parent_name}
             </Text>
-            <Text style={{ fontSize: 15, fontWeight: "bold", color: "grey" }}>
+            <Text style={{ fontSize: 15, fontWeight: "bold", color: "yellow" }}>
               {this.props.navigation.state.params.email}
             </Text>
           </View>
@@ -132,8 +127,10 @@ class Profile extends React.Component {
               alignSelf: "center",
               flexDirection: "row",
               justifyContent: "center",
-              backgroundColor: "#fff",
-              width: "90%",
+              backgroundColor: "#083464",
+              borderColor: "yellow",
+              borderWidth: 2,
+              width: "80%",
               padding: 20,
               paddingBottom: 22,
               borderRadius: 10,
@@ -142,25 +139,9 @@ class Profile extends React.Component {
               marginTop: 20,
             }}
           >
-            <Image
-              source={{
-                uri:
-                  "https://www2.le.ac.uk/digitalsignage/slideshow/chemistry/images/archive/upto-dec-16/star.png",
-              }}
-              style={{ width: 20, height: 20 }}
-            ></Image>
-            <Text
-              style={{
-                fontSize: 15,
-                color: "#818181",
-                fontWeight: "bold",
-                marginLeft: 10,
-              }}
-            >
-              Register Child:
-            </Text>
             <TextInput
               style={styles.input}
+              placeholder="Register Child"
               value={this.state.child_name}
               onChangeText={(child_name) => this.setState({ child_name })}
             />
@@ -168,58 +149,84 @@ class Profile extends React.Component {
               style={styles.addChild}
               onPress={this.handleSubmit}
             >
-              <Text>Add Child</Text>
+              <Text style={{ color: "yellow" }}>Add Child</Text>
+            </TouchableOpacity>
+          </View>
+          <View style={{ marginLeft: 50, marginBottom: -30 }}>
+            <TouchableOpacity
+              style={styles.seeLoginCode}
+              onPress={() => {
+                this.setState({ seeLoginCode: !this.state.seeLoginCode });
+              }}
+            >
+              <Text style={{ color: "yellow", fontSize: 10 }}>
+                {!this.state.seeLoginCode
+                  ? " Show login Codes"
+                  : "Hide login Codes"}
+              </Text>
             </TouchableOpacity>
           </View>
           <View
             style={{
-              alignSelf: "center",
-              flexDirection: "row",
-              justifyContent: "center",
-              backgroundColor: "#fff",
-              width: "100%",
+              // alignSelf: "center",
+              // flexDirection: "row",
+              // justifyContent: "center",
+              backgroundColor: "#083464",
+              borderColor: "yellow",
+              borderWidth: 2,
+              width: "80%",
               height: 150,
-              padding: 20,
+              padding: 10,
               paddingBottom: 22,
               borderRadius: 10,
               shadowOpacity: 80,
               elevation: 15,
-              marginTop: 20,
+              marginLeft: 35,
               marginTop: 40,
             }}
           >
-            <Image
-              source={{
-                uri:
-                  "https://www2.le.ac.uk/digitalsignage/slideshow/chemistry/images/archive/upto-dec-16/star.png",
-              }}
-              style={{ width: 20, height: 20 }}
-            ></Image>
-            <View>
-              <TouchableOpacity
-                onPress={() => {
-                  this.setState({ seeLoginCode: !this.state.seeLoginCode });
-                }}
-              >
-                <Text>
-                  {" "}
-                  {!this.state.seeLoginCode
-                    ? " Show login Codes"
-                    : "Hide login Codes"}
-                </Text>
-              </TouchableOpacity>
-            </View>
             <View>
               {children.map((child) => (
-                <View key={child.child_id}>
-                  <Text>{child.child_name}</Text>
-                  <Text>{child.star_count}</Text>
+                <View
+                  key={child.child_id}
+                  style={{
+                    flexDirection: "row",
+                    flexWrap: "wrap",
+                    justifyContent: "space-evenly",
+                  }}
+                >
+                  <Text
+                    style={{
+                      fontSize: 20,
+                      color: "yellow",
+                      marginRight: 20,
+                      marginLeft: 10,
+                    }}
+                  >
+                    {child.child_name}
+                  </Text>
 
-                  <Text>
+                  <Text
+                    style={{ fontSize: 15, color: "yellow", marginRight: 35 }}
+                  >
+                    {child.star_count}
+                  </Text>
+
+                  <Text style={{ color: "yellow", marginRight: 10 }}>
                     {!this.state.seeLoginCode ? "" : child.login_code}
                   </Text>
 
                   <TouchableOpacity
+                    style={styles.ViewDeleteButtons}
+                    onPress={() =>
+                      this.props.navigation.navigate("ChildPage", {
+                        isParentLoggedIn: true,
+                        child_id: child.child_id,
+                      })
+                    }
+                  ></TouchableOpacity>
+                  <TouchableOpacity
+                    style={styles.ViewButtons}
                     onPress={() =>
                       this.props.navigation.navigate("ChildPage", {
                         isParentLoggedIn: true,
@@ -227,17 +234,18 @@ class Profile extends React.Component {
                       })
                     }
                   >
-                    <Text>View</Text>
+                    <Text style={{ fontSize: 10, color: "yellow" }}>View</Text>
                   </TouchableOpacity>
+
                   <TouchableOpacity
+                    style={styles.DeleteButtons}
                     onPress={() => this.handleDelete(child.child_id)}
                   >
-                    <Text>Delete</Text>
+                    <Text style={{ fontSize: 10, color: "white" }}>Delete</Text>
                   </TouchableOpacity>
                 </View>
               ))}
             </View>
-            {/* </Text> */}
           </View>
           <TouchableOpacity
             onPress={this.handleSignOut}
@@ -287,17 +295,80 @@ const styles = StyleSheet.create({
   input: {
     borderWidth: 1,
     borderColor: "#777",
+    color: "#fff",
     padding: 8,
     margin: 10,
     width: 200,
   },
   addChild: {
-    borderWidth: 1,
-    borderColor: "#777",
-    backgroundColor: "orange",
-    padding: 8,
-    margin: 10,
+    fontSize: 12,
+    borderRadius: 5,
+    height: 30,
     width: 100,
+    backgroundColor: "#083464",
+    overflow: "hidden",
+    borderColor: "yellow",
+    borderWidth: 2,
+    alignItems: "center",
+    justifyContent: "center",
+    marginTop: 13,
+    marginBottom: 5,
+    marginRight: 5,
+  },
+  seeLoginCode: {
+    fontSize: 10,
+    borderRadius: 5,
+    height: 30,
+    width: 100,
+    backgroundColor: "#083464",
+    overflow: "hidden",
+    borderColor: "yellow",
+    borderWidth: 2,
+    alignItems: "center",
+    justifyContent: "center",
+    marginTop: 13,
+    marginBottom: 5,
+    marginRight: 5,
+  },
+  child_name: {
+    flexDirection: "row",
+    flexWrap: "wrap",
+    alignItems: "stretch",
+    justifyContent: "flex-start",
+    alignItems: "flex-start",
+    color: "yellow",
+  },
+  ViewButtons: {
+    justifyContent: "space-evenly",
+    borderRadius: 5,
+    height: 30,
+    width: 40,
+    backgroundColor: "#083464",
+    overflow: "hidden",
+    borderColor: "yellow",
+    borderWidth: 2,
+    alignItems: "center",
+    justifyContent: "center",
+    marginTop: 3,
+    marginBottom: 3,
+    // marginRight: 5,
+    marginLeft: 20,
+  },
+  DeleteButtons: {
+    justifyContent: "space-evenly",
+    borderRadius: 5,
+    height: 30,
+    width: 40,
+    backgroundColor: "red",
+    overflow: "hidden",
+    borderColor: "yellow",
+    borderWidth: 2,
+    alignItems: "center",
+    justifyContent: "center",
+    marginTop: 3,
+    marginBottom: 3,
+    // marginRight: 5,
+    marginLeft: 10,
   },
 });
 export default Profile;
