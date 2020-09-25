@@ -6,6 +6,7 @@ import {
   TouchableOpacity,
   Text,
   Alert,
+  Image,
 } from "react-native";
 import Firebase from "../config/Firebase";
 
@@ -13,6 +14,10 @@ class Home extends Component {
   render() {
     return (
       <View style={styles.home}>
+        <Image
+          style={{ width: 300, height: 300 }}
+          source={require("../images/ustarLogotest2.png")}
+        />
         <TouchableOpacity
           style={styles.buttonLogin}
           onPress={() => this.props.navigation.navigate("Login")}
@@ -49,8 +54,7 @@ const styles = StyleSheet.create({
     width: 500,
     alignItems: "center",
     justifyContent: "center",
-
-    marginTop: 10,
+    marginTop: -50,
     borderRadius: 5,
     borderTopLeftRadius: 20,
     borderTopRightRadius: 20,
