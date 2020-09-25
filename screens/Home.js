@@ -15,8 +15,8 @@ class Home extends Component {
     return (
       <View style={styles.home}>
         <Image
-          style={{ width: 300, height: 300 }}
-          source={require("../images/ustarLogotest2.png")}
+          style={{ width: 400, height: 400, marginRight: 40 }}
+          source={require("../images/newLogo8.png")}
         />
         <TouchableOpacity
           style={styles.buttonLogin}
