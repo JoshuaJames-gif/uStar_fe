@@ -108,8 +108,6 @@ class ChildPage extends Component {
               width: 200,
               height: 100,
               flex: 0.5,
-              alignItems: "left",
-              justifyContent: "left",
             }}
             source={require("../images/newLogo8.png")}
           />
