@@ -2,7 +2,7 @@
 
 ## uStar description
 
-A children monitoring app. It was produced as an incentive to promote good behaviour in children. a way for the parent to reward their children for good behaviour.
+A children monitoring app. It was produced as an incentive to promote good behaviour in children. A way for the parent to reward their children for completed tasks via a virtual system.
 
 ### Installing
 
