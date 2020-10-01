@@ -34,13 +34,13 @@ class Home extends Component {
           style={styles.buttonSignUp}
           onPress={() => this.props.navigation.navigate("HowToUse")}
         >
-          <Text style={[styles.signUpText]}>How to use</Text>
+          <Text style={styles.signUpText}>How to use</Text>
         </TouchableOpacity>
         <TouchableOpacity
           style={styles.buttonSignUp}
           onPress={() => this.props.navigation.navigate("Signup")}
         >
-          <Text style={styles.signUpText}>Sign up</Text>
+          <Text style={styles.signUpText}>Signup</Text>
         </TouchableOpacity>
       </View>
     );
@@ -48,7 +48,7 @@ class Home extends Component {
 }
 const styles = StyleSheet.create({
   home: {
-    flex: 0.5,
+    flex: 1,
     height: 500,
     width: 500,
     alignItems: "center",
