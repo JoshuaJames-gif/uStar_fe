@@ -33,7 +33,7 @@ npm start
 
 ## Links
 
-- [Expo - front-end app](https://expo.io/@/ustar)
+- [Expo - front-end app](https://expo.io/@aadilmohamed123/ustar)
 
 - [Heroku - back-end app](https://ustar-backend.herokuapp.com/api/parents)
 - [GitHub - back-end repo](https://github.com/aadilmohamed123/uStar-project-back-end)
